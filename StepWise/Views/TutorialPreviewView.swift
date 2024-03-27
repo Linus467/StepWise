@@ -1,0 +1,116 @@
+//
+//  TutorialDisplay.swift
+//  StepWise
+//
+//  Created by Linus Gierling on 26.03.24.
+//
+
+import SwiftUI
+
+struct TutorialPreviewView: View {
+    @State var tutorial: Tutorial
+    var body: some View {
+        VStack {
+            VStack{
+                //tutorial image
+                Image(systemName: "video.slash.circle")
+                    .resizable()
+                    .aspectRatio(16/10,contentMode: .fit)
+                    .scaledToFit()
+                    .background(.gray)
+                    .cornerRadius(8)
+                    .padding(.horizontal, 5)
+                
+                //Title Stack
+                HStack{
+                    Text(tutorial.title)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .padding(.leading,10)
+                    
+                    Spacer()
+                    
+                    Text("\(tutorial.time.rounded())h")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .padding(.horizontal, -12)
+                    
+                    Image(systemName: "timer")
+                        .padding(.horizontal, 8)
+                }
+                
+                //Views stack
+                HStack{
+                    Text(tutorial.tutorialKind + " •")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                        .padding(.leading, 10)
+                    
+                    Text("\(tutorial.views) views")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                        .padding(.leading, -3)
+                    
+                    Spacer()
+                    
+                    Text("\(tutorial.difficulty)")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                    
+                    Image(systemName: "hammer.circle")
+                        .padding(.horizontal,8)
+                        .padding(.leading, -10)
+                }
+                //completion rate stack
+                if tutorial.completed{
+                    ProgressView(value: 1.0)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, -3)
+                }
+            }
+            .padding(.vertical, 10)
+            .padding(.horizontal, 4)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(.gray, lineWidth: 2)
+                    .shadow(radius: 2,x:0.5,y:2)
+            )
+            
+        }
+        .padding(.horizontal,10)
+    }
+}
+
+
+struct TutorialPreviewView_Pre: PreviewProvider {
+    static var previews: some View {
+        let sampleSubStepsList = [SubStep(id: UUID(), type: 1, content: .text(TextContent(id: UUID.init(),contentText:"This is an e"))),
+                                  SubStep(id: UUID(), type: 1, content: .text(TextContent(id: UUID.init(),contentText:"This is an e")))]
+        let sampleSteps = [Step(id: UUID(), title: "Step 1",subStepList: sampleSubStepsList),
+                           Step(id: UUID(), title: "Step 2", subStepList: sampleSubStepsList)]
+        let sampleTutorial = Tutorial(
+            id: UUID(),
+            title: "Sample Tutorial",
+            tutorialKind: "DIY",
+            userId: UUID(),
+            time: TimeInterval(10),
+            difficulty: 3,
+            completed: true,
+            description: "A brief description of the tutorial.",
+            previewPictureLink: URL(string: "https://example.com/preview.jpg")!,
+            previewType: "Image",
+            views: 42,
+            steps: sampleSteps,
+            tools: [],
+            tags: [],
+            comments: [],
+            materials: [],
+            ratings: [],
+            userComment: [],
+            watchHistory: [],
+            favouriteList: []
+        )
+    
+        TutorialPreviewView(tutorial: sampleTutorial)
+    }
+}
