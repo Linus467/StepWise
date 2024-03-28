@@ -13,14 +13,31 @@ struct User: Identifiable, Decodable {
     var lastName: String
     var email: String
     var isCreator: Bool
-    var passwordHash: String
 
-    init(id: UUID = UUID(), firstName: String = "", lastName: String = "", email: String = "", isCreator: Bool = false, passwordHash: String = "") {
+    init(id: UUID = UUID(), firstName: String = "", lastName: String = "", email: String = "", isCreator: Bool = false) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
         self.isCreator = isCreator
-        self.passwordHash = passwordHash
     }
+}
+
+struct WatchHistory: Identifiable, Decodable {
+    var id: UUID
+    var tutorialID: UUID
+    var userID: UUID
+    var lastWatchedTime: Date
+    var completedSteps: Int
+}
+
+struct SearchHistory: Identifiable, Decodable {
+    var id: UUID
+    var searchedText: String
+}
+
+struct Favourite: Identifiable, Decodable {
+    var id: UUID
+    var tutorial: [Tutorial]
+    var dateTime: Date
 }

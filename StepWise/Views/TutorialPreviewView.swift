@@ -30,7 +30,7 @@ struct TutorialPreviewView: View {
                     
                     Spacer()
                     
-                    Text("\(tutorial.time.rounded())h")
+                    Text("\(String(format: "%.1f", tutorial.time / 3600))h")
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .padding(.horizontal, -12)
@@ -92,8 +92,8 @@ struct TutorialPreviewView_Pre: PreviewProvider {
             id: UUID(),
             title: "Sample Tutorial",
             tutorialKind: "DIY",
-            userId: UUID(),
-            time: TimeInterval(10),
+            user: User(),
+            time: TimeInterval(10000),
             difficulty: 3,
             completed: true,
             description: "A brief description of the tutorial.",
@@ -102,13 +102,9 @@ struct TutorialPreviewView_Pre: PreviewProvider {
             views: 42,
             steps: sampleSteps,
             tools: [],
-            tags: [],
-            comments: [],
             materials: [],
             ratings: [],
-            userComment: [],
-            watchHistory: [],
-            favouriteList: []
+            userComments: []
         )
     
         TutorialPreviewView(tutorial: sampleTutorial)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PictureContent: Identifiable, Decodable {
-    var id: UUID
-    var pictureLink: URL
-}
+//struct PictureContent: Identifiable, Decodable {
+//    var id: UUID
+//    var pictureLink: URL
+//}

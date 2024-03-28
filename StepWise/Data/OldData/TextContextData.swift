@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TextContent: Identifiable, Decodable {
-    var id: UUID
-    var contentText: String
-}
+//struct TextContent: Identifiable, Decodable {
+//    var id: UUID
+//    var contentText: String
+//}

@@ -26,7 +26,7 @@ struct UserCommentView: View {
 
 struct UserCommentView_Previews: PreviewProvider {
     static var previews: some View {
-        let userCommentSample = UserComment(id: UUID.init(), stepID:UUID.init(), user: User(id: UUID.init(), firstName: "Linus", lastName: "Gierling", email: "LinusGi@Gmx.de", isCreator: true, passwordHash: "asdfasdfas"), text: "It was a great product asdfjn;" )
+        let userCommentSample = UserComment(id: UUID.init(), stepID:UUID.init(), user: User(id: UUID.init(), firstName: "Linus", lastName: "Gierling", email: "LinusGi@Gmx.de", isCreator: true), text: "It was a great product asdfjn;" )
         UserCommentView(userComment: userCommentSample)
     }
 }

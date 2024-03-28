@@ -1,0 +1,91 @@
+{
+  "id": "1E2DFA89-496A-47FD-9941-DF1FC4E6484A",
+  "title": "How to Start with Woodworking",
+  "tutorialKind": "DIY",
+  "user": {
+    "id": "550E8400-E29B-41D4-A716-446655440000",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "isCreator": true
+  },
+  "time": 60,
+  "difficulty": 2,
+  "completed": false,
+  "description": "A beginner's guide to starting with woodworking.",
+  "previewPictureLink": "https://example.com/image.jpg",
+  "previewType": "Image",
+  "views": 150,
+  "steps": [
+    {
+      "id": "2F3E4A89-123B-45CD-6789-EF1FC4E6484B",
+      "title": "Preparing the Wood",
+      "subStepList": [
+        {
+          "id": "6H7J8K90-4445-67GH-8888-9DAEBF0EC3C",
+          "type": 1,
+          "content": {
+            "text": {
+              "id": "ef19622b-29ca-48ac-a81c-8ac701c5c466",
+              "contentText": "Measure and cut the wood planks to the required sizes."
+            }
+          }
+        },
+        {
+          "id": "e5b0012d-c873-4858-b710-9b932d874356",
+          "type": 2,
+          "content": {
+            "picture": {
+              "id": "4c6a9b0f-d6b7-47ee-8a2d-261915118828",
+              "pictureLink": "https://example.com/steps/cutting.jpg"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "id": "263586bf-9302-4430-ad93-b138c5173e42",
+      "title": "Hammer",
+      "amount": 1,
+      "link": "https://example.com/tools/hammer"
+    }
+  ],
+  "materials": [
+    {
+      "id": "4E5F6A70-1112-43CD-2222-7B8C9D0EBC1A",
+      "title": "Wood Planks",
+      "amount": 5,
+      "link": "https://example.com/materials/wood-planks"
+    }
+  ],
+  "ratings": [
+    {
+      "id": "355c8bd0-8e82-451e-ab07-d8fffc6e1205",
+      "tutorialID": "1E2DFA89-496A-47FD-9941-DF1FC4E6484A",
+      "user": {
+        "id": "f96b9369-c6e7-45d3-9020-b65a65d8765a",
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "email": "jane.smith@example.com",
+        "isCreator": false
+      },
+      "rating": 5
+    }
+  ],
+  "userComments": [
+    {
+      "id": "d43e34b3-877c-4d2b-989b-98739a2323f1",
+      "stepID": "2F3E4A89-123B-45CD-6789-EF1FC4E6484B",
+      "text": "This was really helpful, thanks!",
+      "user": {
+        "id": "928cda31-39e1-4ae5-8dc2-4e0215864575",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@example.com",
+        "isCreator": true
+      }
+    }
+  ]
+}

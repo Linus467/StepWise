@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct VideoContent: Identifiable, Decodable {
-    var id: UUID
-    var videoLink: URL
-}
+//struct VideoContent: Identifiable, Decodable {
+//    var id: UUID
+//    var videoLink: URL
+//}
