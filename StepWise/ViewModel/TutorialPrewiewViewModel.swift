@@ -12,7 +12,10 @@ class TutorialPreviewViewModel: ObservableObject {
     @Published var tutorialPreview: [Tutorial] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
-
+    
+    init(){
+        
+    }
     func fetchTutorials() {
         isLoading = true
         guard let url = URL(string: "http://127.0.0.1:5000/api/tutorial") else {

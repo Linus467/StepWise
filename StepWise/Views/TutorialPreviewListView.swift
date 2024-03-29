@@ -9,30 +9,37 @@ import SwiftUI
 
 struct TutorialPreviewListView: View {
     @StateObject private var viewModel = TutorialPreviewViewModel()
+    @State private var selectedTutorial: Tutorial? = nil
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    ForEach(viewModel.tutorialPreview) { tutorial in
-                        NavigationLink(value: tutorial){
-                            TutorialPreviewView(tutorial: tutorial)
-                                .padding(.vertical, 5)
-                        }
-                        .foregroundStyle(.primary)
+        NavigationSplitView {
+            // Sidebar (Master view) now uses List
+            List(viewModel.tutorialPreview, id: \.self, selection: $selectedTutorial) { tutorial in
+                //Section{
+                    Button(action: {
+                        self.selectedTutorial = tutorial
+                    }) {
+                        TutorialPreviewView(tutorial: tutorial)
                     }
-                }
-                .padding(.horizontal, 0)
+                    .buttonStyle(PlainButtonStyle()) // To maintain the button appearance
+                    .foregroundStyle(.primary)
+                
             }
             .navigationTitle("Tutorials")
-            .onAppear {
-                viewModel.fetchTutorials()
+            .listStyle(PlainListStyle())
+        } detail: {
+            ZStack {
+                if let selectedTutorial = selectedTutorial {
+                    TutorialMenuView(viewModel: TutorialMenuViewModel(), tutorial: selectedTutorial)
+                } else {
+                    Text("Please select a tutorial")
+                        .foregroundStyle(.secondary)
+                }
             }
-            .overlay(viewModel.isLoading ? ProgressView("Loading...") : nil)
-            
         }
-        .navigationDestination(for: Tutorial.self){ tutorial in
-            TutorialMenuView(viewModel: TutorialMenuViewModel(), tutorial: tutorial)
+        .overlay(viewModel.isLoading ? ProgressView("Loading...") : nil)
+        .task {
+            await viewModel.fetchTutorials()
         }
     }
 }

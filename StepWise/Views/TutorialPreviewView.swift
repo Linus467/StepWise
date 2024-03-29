@@ -17,6 +17,7 @@ struct TutorialPreviewView: View {
                     .resizable()
                     .aspectRatio(16/10,contentMode: .fit)
                     .scaledToFit()
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 200)
                     .background(.gray)
                     .cornerRadius(8)
                     .padding(.horizontal, 5)
@@ -70,14 +71,8 @@ struct TutorialPreviewView: View {
             }
             .padding(.vertical, 10)
             .padding(.horizontal, 4)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(.gray, lineWidth: 2)
-                    .shadow(radius: 2,x:0.5,y:2)
-            )
-            
         }
-        .padding(.horizontal,10)
+        .padding(.horizontal, -10)
     }
 }
 
@@ -106,7 +101,11 @@ struct TutorialPreviewView_Pre: PreviewProvider {
             ratings: [],
             userComments: []
         )
-    
-        TutorialPreviewView(tutorial: sampleTutorial)
+        List{
+            TutorialPreviewView(tutorial: sampleTutorial)
+            TutorialPreviewView(tutorial: sampleTutorial)
+            
+        }
+        .padding(.horizontal, 0)
     }
 }
