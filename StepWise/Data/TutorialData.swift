@@ -37,7 +37,7 @@ struct SubStep: Identifiable, Decodable {
     var type: Int
     var content: Content
 }
-enum Content: Codable {
+enum Content: String, Codable {
     case text(TextContent)
     case picture(PictureContent)
     case video(VideoContent)
@@ -94,17 +94,17 @@ struct Rating: Identifiable, Decodable {
     var text: String
 }
 
-struct TextContent: Identifiable, Decodable, Encodable {
+struct TextContent: Identifiable, Codable {
     var id: UUID
     var contentText: String
 }
 
-struct PictureContent: Identifiable, Decodable, Encodable {
+struct PictureContent: Identifiable, Codable {
     var id: UUID
     var pictureLink: URL
 }
 
-struct VideoContent: Identifiable, Decodable, Encodable {
+struct VideoContent: Identifiable, Codable {
     var id: UUID
     var videoLink: URL
 }

@@ -11,12 +11,14 @@ struct TutorialPreviewListView: View {
     @StateObject private var viewModel = TutorialPreviewViewModel()
     @State private var showAlert = false
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 LazyVStack(spacing: 0) { // Adjust spacing between items as needed
                     ForEach(viewModel.tutorialPreview) { tutorial in
-                        TutorialPreviewView(tutorial: tutorial)
-                            .padding(.vertical, 5)
+                        NavigationLink(destination: TutorialMenuView(tutorial: tutorial)){
+                            TutorialPreviewView(tutorial: tutorial)
+                                .padding(.vertical, 5)
+                        }
                     }
                 }
                 .padding(.horizontal, 0)

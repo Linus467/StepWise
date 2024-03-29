@@ -17,6 +17,5 @@ class TutorialMenuViewModel: ObservableObject {
     
     func toggleFavorite() {
         isFavorite.toggle()
-        print("Tutorial is now \(isFavorite ? "a favorite" : "not a favorite")")
     }
 }

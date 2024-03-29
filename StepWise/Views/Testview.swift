@@ -1,60 +1,22 @@
 //
-//  TutorialView.swift
+//  Testview.swift
 //  StepWise
 //
-//  Created by Linus Gierling on 27.03.24.
+//  Created by Linus Gierling on 29.03.24.
 //
 
 import SwiftUI
 
-struct TutorialStepsView: View {
+struct Testview: View {
     var steps: [Step]
-    //tracking current step
-    @State private var currentStepIndex = 0
-
     var body: some View {
-        NavigationStack {
-            VStack {
-                
-                //Progress bar
-                ProgressView(value: Double(currentStepIndex) / Double(steps.count-1))
-                    .progressViewStyle(LinearProgressViewStyle())
-                    .padding(.horizontal)
-                
-                //MARK: -- Substep View
-                TabView(selection: $currentStepIndex) {
-                    ForEach(steps.indices, id: \.self) { index in
-                        ScrollView(.vertical, showsIndicators: true) {
-                            VStack(alignment: .leading, spacing: 10) {
-                                ForEach(steps[index].subStepList) { subStep in
-                                    
-                                    SubStepView(subStep: subStep);
-                                    
-                                    Divider()
-                                        .padding(.vertical)
-                                }
-                            }
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 10)
-                            .tag(index)
-                        }
-                        
-                    }
-                }
-                //activates Swipe gesture
-                .tabViewStyle(PageTabViewStyle())
-            }
-            .navigationBarTitle(steps[currentStepIndex].title)
-            
-        }
+        TutorialStepsView(steps: steps)
     }
 }
 
-// Assuming the SubStepView remains unchanged
-
-struct TutorialStepsView_Previews: PreviewProvider {
+struct Testview_Preview: PreviewProvider {
     static var previews: some View {
-        TutorialStepsView(steps: [
+        Testview(steps: [
             Step(id: UUID(), title: "Step 1: Gather Materials", subStepList: [
                 SubStep(id: UUID(), type: 1, content: .text(TextContent(id: UUID(), contentText: "Start by gathering all the necessary materials listed."))),
                 SubStep(id: UUID(), type: 1, content: .text(TextContent(id: UUID(), contentText: "Check the material quality."))),

@@ -15,11 +15,12 @@ struct TutorialMenuView: View {
     @State private var showSteps: Bool = false
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             ScrollView {
+                //MARK: -- Tutorial Information
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Kind: \(tutorial.tutorialKind)")
-                        .font(.title2)
+                        .font(.title3)
                         .foregroundColor(.secondary)
                     
                     // Display the tutorial description
@@ -36,7 +37,7 @@ struct TutorialMenuView: View {
                     .foregroundColor(.secondary)
                     
                     // Display estimated time
-                    Text("Estimated Time: \(formatTimeInterval(tutorial.time))")
+                    Text("Estimated Time: \(String(format: "%.1f", tutorial.time / 3600))h")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     
@@ -47,7 +48,7 @@ struct TutorialMenuView: View {
                 }
                 .padding()
                 
-                //Materials list
+                //MARK: -- Material
                 Section{
                     Button(action: {
                         withAnimation {
@@ -61,6 +62,7 @@ struct TutorialMenuView: View {
                         }
                     }
                     
+                    //Material toogle view
                     if showMaterials {
                         ForEach(tutorial.materials, id: \.id) { material in
                             TutorialMaterialView(material: material)
@@ -72,6 +74,7 @@ struct TutorialMenuView: View {
                 
                 Divider()
                 
+                //MARK: -- Tools
                 Section{
                     Button(action: {
                         withAnimation {
@@ -85,6 +88,7 @@ struct TutorialMenuView: View {
                         }
                     }
                     
+                    //Tools toogle view
                     if showTools {
                         ForEach(tutorial.tools, id: \.id) { tool in
                             TutorialToolView(tool: tool)
@@ -96,14 +100,15 @@ struct TutorialMenuView: View {
                 
                 Divider()
                 
+                //MARK: -- Ratings
                 Section{
                     ForEach(tutorial.ratings, id: \.id) { rating in
                         TutorialRatingView(rating: rating)
                     }
                 }
                 .padding(.horizontal,10)
-                
             }
+            //MARK: -- Navgation
             .navigationDestination(isPresented: $showSteps){
                 TutorialStepsView(steps: tutorial.steps)
             }
@@ -126,20 +131,11 @@ struct TutorialMenuView: View {
                     }
                 }
             }
-            
-            .listStyle(GroupedListStyle())
         }
     }
 }
 
-func formatTimeInterval(_ interval: TimeInterval) -> String {
-       let formatter = DateComponentsFormatter()
-       formatter.allowedUnits = [.hour, .minute]
-       formatter.unitsStyle = .short
-       return formatter.string(from: interval) ?? ""
-   }
-
-
+//MARK: -- Preview
 struct TutorialMenuView_Previews: PreviewProvider {
     static var previews: some View {
         let user = User(id: UUID(), firstName: "John", lastName: "Doe", email: "john.doe@example.com", isCreator: true)
