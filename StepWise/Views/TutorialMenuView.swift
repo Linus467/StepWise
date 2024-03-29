@@ -19,30 +19,32 @@ struct TutorialMenuView: View {
             ScrollView {
                 //MARK: -- Tutorial Information
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Kind: \(tutorial.tutorialKind)")
+                    Text("Kind: \(tutorial.tutorialKind ?? " ")")
                         .font(.title3)
                         .foregroundColor(.secondary)
                     
                     // Display the tutorial description
-                    Text(tutorial.description)
+                    Text(tutorial.description ?? "-")
                         .font(.body)
                     
                     // Display user and difficulty
-                    HStack {
-                        Text("Created by: \(tutorial.user.firstName) \(tutorial.user.lastName)")
-                        Spacer()
-                        Text("Difficulty: \(tutorial.difficulty)")
+                    if tutorial.user != nil{
+                        HStack {
+                            Text("Created by: \(tutorial.user!.firstName) \(tutorial.user!.lastName)")
+                            Spacer()
+                            Text("Difficulty: \(tutorial.difficulty ?? 10)")
+                        }
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                     }
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    
+                   
                     // Display estimated time
-                    Text("Estimated Time: \(String(format: "%.1f", tutorial.time / 3600))h")
+                    Text("Estimated Time: \(String(format: "%.1f", tutorial.time ?? TimeInterval(0) / 3600))h")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     
                     // Display number of views
-                    Text("Views: \(tutorial.views)")
+                    Text("Views: \(tutorial.views ?? 0)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -64,7 +66,7 @@ struct TutorialMenuView: View {
                     
                     //Material toogle view
                     if showMaterials {
-                        ForEach(tutorial.materials, id: \.id) { material in
+                        ForEach(tutorial.materials ?? [], id: \.id) { material in
                             TutorialMaterialView(material: material)
                         }
                     }
@@ -90,7 +92,7 @@ struct TutorialMenuView: View {
                     
                     //Tools toogle view
                     if showTools {
-                        ForEach(tutorial.tools, id: \.id) { tool in
+                        ForEach(tutorial.tools ?? [], id: \.id) { tool in
                             TutorialToolView(tool: tool)
                         }
                     }
@@ -102,7 +104,7 @@ struct TutorialMenuView: View {
                 
                 //MARK: -- Ratings
                 Section{
-                    ForEach(tutorial.ratings, id: \.id) { rating in
+                    ForEach(tutorial.ratings ?? [], id: \.id) { rating in
                         TutorialRatingView(rating: rating)
                     }
                 }
@@ -110,9 +112,9 @@ struct TutorialMenuView: View {
             }
             //MARK: -- Navgation
             .navigationDestination(isPresented: $showSteps){
-                TutorialStepsView(steps: tutorial.steps)
+                TutorialStepsView(steps: tutorial.steps ?? [])
             }
-            .navigationTitle(tutorial.title)
+            .navigationTitle(tutorial.title ?? "No Title found")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {

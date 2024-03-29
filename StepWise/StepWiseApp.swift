@@ -25,7 +25,7 @@ struct StepWiseApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TutorialPreviewListView()
         }
         .modelContainer(sharedModelContainer)
     }

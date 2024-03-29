@@ -11,10 +11,13 @@ struct UserCommentView: View {
     @State var userComment: UserComment
     var body: some View {
         VStack(alignment: .leading, spacing: 5){
-            Text(userComment.user.lastName + " " + userComment.user.firstName)
-                .font(.subheadline)
-                .fontWeight(.semibold)
-            Text(userComment.text)
+            
+            if userComment.user != nil{
+                Text(userComment.user!.lastName + " " + userComment.user!.firstName)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+            }
+            Text(userComment.text ?? "Error")
                 .font(.caption)
                 .multilineTextAlignment(.leading)
         }

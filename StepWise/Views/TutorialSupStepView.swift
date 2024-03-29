@@ -23,6 +23,8 @@ struct SubStepView: View {
             Image(systemName: "play.rectangle")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+        case .none:
+            EmptyView()
         }
     }
 }

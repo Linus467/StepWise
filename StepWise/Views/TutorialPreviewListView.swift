@@ -9,33 +9,30 @@ import SwiftUI
 
 struct TutorialPreviewListView: View {
     @StateObject private var viewModel = TutorialPreviewViewModel()
-    @State private var showAlert = false
+    
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVStack(spacing: 0) { // Adjust spacing between items as needed
+                LazyVStack(spacing: 0) {
                     ForEach(viewModel.tutorialPreview) { tutorial in
-                        NavigationLink(destination: TutorialMenuView(tutorial: tutorial)){
+                        NavigationLink(value: tutorial){
                             TutorialPreviewView(tutorial: tutorial)
                                 .padding(.vertical, 5)
                         }
+                        .foregroundStyle(.primary)
                     }
                 }
                 .padding(.horizontal, 0)
             }
             .navigationTitle("Tutorials")
             .onAppear {
-                viewModel.fetchUserComments()
+                viewModel.fetchTutorials()
             }
             .overlay(viewModel.isLoading ? ProgressView("Loading...") : nil)
-            .onChange(of: viewModel.errorMessage) { newValue in
-                showAlert = newValue != nil
-            }
-            .alert("Error", isPresented: $showAlert) {
-                Button("OK", role: .cancel) { }
-            } message: {
-                Text(viewModel.errorMessage ?? "Unknown error")
-            }
+            
+        }
+        .navigationDestination(for: Tutorial.self){ tutorial in
+            TutorialMenuView(viewModel: TutorialMenuViewModel(), tutorial: tutorial)
         }
     }
 }

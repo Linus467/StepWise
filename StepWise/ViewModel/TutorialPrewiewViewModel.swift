@@ -13,7 +13,7 @@ class TutorialPreviewViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    func fetchUserComments() {
+    func fetchTutorials() {
         isLoading = true
         guard let url = URL(string: "http://127.0.0.1:5000/api/tutorial") else {
             errorMessage = "Invalid URL"
@@ -27,7 +27,6 @@ class TutorialPreviewViewModel: ObservableObject {
                     self?.errorMessage = "Network error: \(error.localizedDescription)"
                     return
                 }
-
                 guard let data = data else {
                     self?.errorMessage = "No data received from the server"
                     return
@@ -35,28 +34,21 @@ class TutorialPreviewViewModel: ObservableObject {
 
                 do {
                     self?.tutorialPreview  = try JSONDecoder().decode([Tutorial].self, from: data)
-                } catch let error as DecodingError {
-                    self?.errorMessage = self?.decodeError(error, data: data)
-                } catch {
-                    self?.errorMessage = "Unknown error: \(error.localizedDescription)"
+                
+                } catch DecodingError.keyNotFound(let key, let context) {
+                    self?.errorMessage = "could not find key \(key) in JSON: \(context.debugDescription)"
+                } catch DecodingError.valueNotFound(let type, let context) {
+                    self?.errorMessage = "could not find type \(type) in JSON: \(context.debugDescription)"
+                } catch DecodingError.typeMismatch(let type, let context) {
+                    self?.errorMessage = "type mismatch for type \(type) in JSON: \(context.debugDescription)"
+                } catch DecodingError.dataCorrupted(let context) {
+                    self?.errorMessage = "data found to be corrupted in JSON: \(context.debugDescription)"
+                } catch let error as NSError {
+                    self?.errorMessage = "Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)"
+                }catch let jsonError as NSError {
+                    self?.errorMessage = "JSON decode failed: \(jsonError.localizedDescription)"
                 }
             }
         }.resume()
-    }
-
-    private func decodeError(_ error: DecodingError, data: Data) -> String {
-        var errorDescription = "Decoding error: "
-
-        switch error {
-        case .typeMismatch(_, let context), .valueNotFound(_, let context), .keyNotFound(_, let context), .dataCorrupted(let context):
-            errorDescription += context.debugDescription
-            if let jsonString = String(data: data, encoding: .utf8) {
-                errorDescription.append("\nReceived JSON: \(jsonString)")
-            }
-        @unknown default:
-            errorDescription += "An unknown decoding error occurred."
-        }
-
-        return errorDescription
     }
 }

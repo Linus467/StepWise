@@ -16,7 +16,7 @@ struct MainContentView: View {
         NavigationSplitView {
             List {
                 ForEach(items) { item in
-                    NavigationLink {
+                    NavigationLink{
                         Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
                         Text(items.description)
                         Button("Delete") {

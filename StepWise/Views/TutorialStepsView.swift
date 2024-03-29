@@ -26,7 +26,7 @@ struct TutorialStepsView: View {
                     ForEach(steps.indices, id: \.self) { index in
                         ScrollView(.vertical, showsIndicators: true) {
                             VStack(alignment: .leading, spacing: 10) {
-                                ForEach(steps[index].subStepList) { subStep in
+                                ForEach(steps[index].subStepList!) { subStep in
                                     
                                     SubStepView(subStep: subStep);
                                     
@@ -44,7 +44,7 @@ struct TutorialStepsView: View {
                 //activates Swipe gesture
                 .tabViewStyle(PageTabViewStyle())
             }
-            .navigationBarTitle(steps[currentStepIndex].title)
+            .navigationBarTitle(steps[currentStepIndex].title ?? "No Title")
             
         }
     }

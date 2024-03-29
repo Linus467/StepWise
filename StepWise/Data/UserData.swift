@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Identifiable, Decodable {
+struct User: Identifiable, Decodable, Hashable {
     var id: UUID
     var firstName: String
     var lastName: String
@@ -23,7 +23,7 @@ struct User: Identifiable, Decodable {
     }
 }
 
-struct WatchHistory: Identifiable, Decodable {
+struct WatchHistory: Identifiable, Decodable, Hashable {
     var id: UUID
     var tutorialID: UUID
     var userID: UUID
@@ -31,12 +31,12 @@ struct WatchHistory: Identifiable, Decodable {
     var completedSteps: Int
 }
 
-struct SearchHistory: Identifiable, Decodable {
+struct SearchHistory: Identifiable, Decodable, Hashable {
     var id: UUID
     var searchedText: String
 }
 
-struct Favourite: Identifiable, Decodable {
+struct Favourite: Identifiable, Decodable, Hashable {
     var id: UUID
     var tutorial: [Tutorial]
     var dateTime: Date

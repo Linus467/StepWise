@@ -208,11 +208,11 @@
 				1585FDC02BA07B4B00B80AE8 /* ContentViewModel.swift */,
 				1521C0362B9F0C82009D8A43 /* Assets.xcassets */,
 				1521C0382B9F0C82009D8A43 /* StepWise.entitlements */,
+				1514F3FB2BB1CAE4003B4E52 /* MainContentView.swift */,
 				15038D412BB338E4008C82D2 /* ViewModel */,
 				1514F4022BB2EB4C003B4E52 /* Views */,
 				1514F4012BB2EB37003B4E52 /* Data */,
 				1521C0392B9F0C82009D8A43 /* Preview Content */,
-				1514F3FB2BB1CAE4003B4E52 /* MainContentView.swift */,
 				15A36E172BB48387009A5306 /* TestJSONs */,
 			);
 			path = StepWise;

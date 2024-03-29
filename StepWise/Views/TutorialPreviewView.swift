@@ -23,14 +23,14 @@ struct TutorialPreviewView: View {
                 
                 //Title Stack
                 HStack{
-                    Text(tutorial.title)
+                    Text(tutorial.title ?? "No title")
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .padding(.leading,10)
                     
                     Spacer()
                     
-                    Text("\(String(format: "%.1f", tutorial.time / 3600))h")
+                    Text("\(String(format: "%.1f", tutorial.time ?? TimeInterval(0) / 3600))h")
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .padding(.horizontal, -12)
@@ -41,19 +41,19 @@ struct TutorialPreviewView: View {
                 
                 //Views stack
                 HStack{
-                    Text(tutorial.tutorialKind + " •")
+                    Text(tutorial.tutorialKind ?? "-" + " •")
                         .font(.caption)
                         .fontWeight(.medium)
                         .padding(.leading, 10)
                     
-                    Text("\(tutorial.views) views")
+                    Text("\(tutorial.views ?? 0) views")
                         .font(.caption)
                         .fontWeight(.medium)
                         .padding(.leading, -3)
                     
                     Spacer()
                     
-                    Text("\(tutorial.difficulty)")
+                    Text("\(tutorial.difficulty ?? 10)")
                         .font(.caption)
                         .fontWeight(.medium)
                     
@@ -62,7 +62,7 @@ struct TutorialPreviewView: View {
                         .padding(.leading, -10)
                 }
                 //completion rate stack
-                if tutorial.completed{
+                if tutorial.completed ?? false{
                     ProgressView(value: 1.0)
                         .padding(.horizontal, 10)
                         .padding(.vertical, -3)
