@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct TutorialMenuView: View {
+struct MenuView: View {
     @ObservedObject var viewModel: TutorialMenuViewModel
     var tutorial: Tutorial
     @State private var showMaterials = false
@@ -39,7 +39,7 @@ struct TutorialMenuView: View {
                     }
                    
                     // Display estimated time
-                    Text("Estimated Time: \(String(format: "%.1f", tutorial.time ?? TimeInterval(0) / 3600))h")
+                    Text("Estimated Time: \(String(format: "%.1f", (tutorial.time ?? TimeInterval(0)) / 3600))h")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     
@@ -67,7 +67,7 @@ struct TutorialMenuView: View {
                     //Material toogle view
                     if showMaterials {
                         ForEach(tutorial.materials ?? [], id: \.id) { material in
-                            TutorialMaterialView(material: material)
+                            MaterialView(material: material)
                         }
                     }
                 }
@@ -93,7 +93,7 @@ struct TutorialMenuView: View {
                     //Tools toogle view
                     if showTools {
                         ForEach(tutorial.tools ?? [], id: \.id) { tool in
-                            TutorialToolView(tool: tool)
+                            ToolView(tool: tool)
                         }
                     }
                 }
@@ -105,14 +105,14 @@ struct TutorialMenuView: View {
                 //MARK: -- Ratings
                 Section{
                     ForEach(tutorial.ratings ?? [], id: \.id) { rating in
-                        TutorialRatingView(rating: rating)
+                        RatingView(rating: rating)
                     }
                 }
                 .padding(.horizontal,10)
             }
             //MARK: -- Navgation
             .navigationDestination(isPresented: $showSteps){
-                TutorialStepsView(steps: tutorial.steps ?? [])
+                StepsView(steps: tutorial.steps ?? [])
             }
             .navigationTitle(tutorial.title ?? "No Title found")
             .toolbar {
@@ -187,6 +187,6 @@ struct TutorialMenuView_Previews: PreviewProvider {
             userComments: []
         )
         
-        return TutorialMenuView(viewModel: TutorialMenuViewModel(), tutorial: sampleTutorial)
+        return MenuView(viewModel: TutorialMenuViewModel(), tutorial: sampleTutorial)
     }
 }

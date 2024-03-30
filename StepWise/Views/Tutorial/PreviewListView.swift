@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TutorialPreviewListView: View {
+struct PreviewListView: View {
     @StateObject private var viewModel = TutorialPreviewViewModel()
     @State private var selectedTutorial: Tutorial? = nil
     
@@ -15,22 +15,20 @@ struct TutorialPreviewListView: View {
         NavigationSplitView {
             // Sidebar (Master view) now uses List
             List(viewModel.tutorialPreview, id: \.self, selection: $selectedTutorial) { tutorial in
-                //Section{
-                    Button(action: {
-                        self.selectedTutorial = tutorial
-                    }) {
-                        TutorialPreviewView(tutorial: tutorial)
-                    }
-                    .buttonStyle(PlainButtonStyle()) // To maintain the button appearance
-                    .foregroundStyle(.primary)
-                
+                Button(action: {
+                    self.selectedTutorial = tutorial
+                }) {
+                    PreviewView(tutorial: tutorial)
+                }
+                .buttonStyle(PlainButtonStyle()) // To maintain the button appearance
+                .foregroundStyle(.primary)
             }
             .navigationTitle("Tutorials")
             .listStyle(PlainListStyle())
         } detail: {
             ZStack {
                 if let selectedTutorial = selectedTutorial {
-                    TutorialMenuView(viewModel: TutorialMenuViewModel(), tutorial: selectedTutorial)
+                    MenuView(viewModel: TutorialMenuViewModel(), tutorial: selectedTutorial)
                 } else {
                     Text("Please select a tutorial")
                         .foregroundStyle(.secondary)
@@ -45,5 +43,5 @@ struct TutorialPreviewListView: View {
 }
 
 #Preview {
-    TutorialPreviewListView()
+    PreviewListView()
 }

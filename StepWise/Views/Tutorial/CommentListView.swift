@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct UserCommentsListView: View {
+struct CommentsListView: View {
     @StateObject private var viewModel = UserCommentViewModel()
     @State private var showAlert = false
 
     var body: some View {
         NavigationView {
             List(viewModel.userComments) { userComment in
-                UserCommentView(userComment: userComment)
+                CommentView(userComment: userComment)
             }
             .navigationTitle("Comments")
             .onAppear {
@@ -35,6 +35,6 @@ struct UserCommentsListView: View {
 
 struct UserCommentsListView_Previews: PreviewProvider {
     static var previews: some View {
-        UserCommentsListView()
+        CommentsListView()
     }
 }

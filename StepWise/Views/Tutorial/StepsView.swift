@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TutorialStepsView: View {
+struct StepsView: View {
     var steps: [Step]
     //tracking current step
     @State private var currentStepIndex = 0
@@ -54,7 +54,7 @@ struct TutorialStepsView: View {
 
 struct TutorialStepsView_Previews: PreviewProvider {
     static var previews: some View {
-        TutorialStepsView(steps: [
+        StepsView(steps: [
             Step(id: UUID(), title: "Step 1: Gather Materials", subStepList: [
                 SubStep(id: UUID(), type: 1, content: .text(TextContent(id: UUID(), contentText: "Start by gathering all the necessary materials listed."))),
                 SubStep(id: UUID(), type: 1, content: .text(TextContent(id: UUID(), contentText: "Check the material quality."))),

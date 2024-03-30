@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TutorialMaterialView: View {
+struct MaterialView: View {
     var material: Material
 
     var body: some View {
@@ -35,8 +35,8 @@ struct TutorialMaterialView: View {
 struct TutorialMaterialView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            TutorialMaterialView(material: Material(id: UUID(), title: "Wood Planks", amount: 10, link: "https://example.com/material/woodplanks"))
-            TutorialMaterialView(material: Material(id: UUID(), title: "Nails", amount: 50, link: "https://example.com/material/nails"))
+            MaterialView(material: Material(id: UUID(), title: "Wood Planks", amount: 10, link: "https://example.com/material/woodplanks"))
+            MaterialView(material: Material(id: UUID(), title: "Nails", amount: 50, link: "https://example.com/material/nails"))
         }
     }
 }

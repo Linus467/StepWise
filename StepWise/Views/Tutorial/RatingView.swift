@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct TutorialRatingView: View {
+struct RatingView: View {
     var rating: Rating
 
     var body: some View {
@@ -39,8 +39,8 @@ struct TutorialRatingView: View {
 struct TutorialRatingView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            TutorialRatingView(rating: Rating(id: UUID(), user: User(id: UUID(), firstName: "John", lastName: "Doe", email: "johndoe@example.com", isCreator: false), rating: 4, text: "Great tutorial!"))
-            TutorialRatingView(rating: Rating(id: UUID(), user: User(id: UUID(), firstName: "Jane", lastName: "Smith", email: "janesmith@example.com", isCreator: true), rating: 5, text: "Very helpful, thanks!"))
+            RatingView(rating: Rating(id: UUID(), user: User(id: UUID(), firstName: "John", lastName: "Doe", email: "johndoe@example.com", isCreator: false), rating: 4, text: "Great tutorial!"))
+            RatingView(rating: Rating(id: UUID(), user: User(id: UUID(), firstName: "Jane", lastName: "Smith", email: "janesmith@example.com", isCreator: true), rating: 5, text: "Very helpful, thanks!"))
         }
     }
 }

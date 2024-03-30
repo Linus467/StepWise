@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TutorialPreviewView: View {
+struct PreviewView: View {
     @State var tutorial: Tutorial
     var body: some View {
         VStack {
@@ -31,7 +31,7 @@ struct TutorialPreviewView: View {
                     
                     Spacer()
                     
-                    Text("\(String(format: "%.1f", tutorial.time ?? TimeInterval(0) / 3600))h")
+                    Text("\(String(format: "%.1f", (tutorial.time ?? TimeInterval(0)) / 3600))h")
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .padding(.horizontal, -12)
@@ -42,7 +42,7 @@ struct TutorialPreviewView: View {
                 
                 //Views stack
                 HStack{
-                    Text(tutorial.tutorialKind ?? "-" + " •")
+                    Text((tutorial.tutorialKind ?? "-") + " •")
                         .font(.caption)
                         .fontWeight(.medium)
                         .padding(.leading, 10)
@@ -102,8 +102,8 @@ struct TutorialPreviewView_Pre: PreviewProvider {
             userComments: []
         )
         List{
-            TutorialPreviewView(tutorial: sampleTutorial)
-            TutorialPreviewView(tutorial: sampleTutorial)
+            PreviewView(tutorial: sampleTutorial)
+            PreviewView(tutorial: sampleTutorial)
             
         }
         .padding(.horizontal, 0)
