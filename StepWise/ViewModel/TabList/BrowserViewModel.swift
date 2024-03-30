@@ -1,24 +1,23 @@
 //
-//  UserPrewiewViewModel.swift
+//  BrowserViewModel.swift
 //  StepWise
 //
-//  Created by Linus Gierling on 27.03.24.
+//  Created by Linus Gierling on 30.03.24.
 //
 
-import SwiftUI
-import Combine
+import Foundation
 
-class TutorialPreviewViewModel: ObservableObject {
+class BrowserViewModel: ObservableObject {
     @Published var tutorialPreview: [Tutorial] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
-    
+
     init(){
         
     }
     func fetchTutorials() {
         isLoading = true
-        guard let url = URL(string: "http://127.0.0.1:5000/api/tutorial") else {
+        guard let url = URL(string: "http://127.0.0.1:5000/api/tutorial/id/?tutorial_id=123e4567-e89b-12d3-a456-426614174002") else {
             errorMessage = "Invalid URL"
             return
         }
@@ -48,10 +47,9 @@ class TutorialPreviewViewModel: ObservableObject {
                     self?.errorMessage = "data found to be corrupted in JSON: \(context.debugDescription)"
                 } catch let error as NSError {
                     self?.errorMessage = "Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)"
-                }catch let jsonError as NSError {
-                    self?.errorMessage = "JSON decode failed: \(jsonError.localizedDescription)"
                 }
             }
         }.resume()
     }
 }
+

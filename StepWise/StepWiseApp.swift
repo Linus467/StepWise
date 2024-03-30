@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct StepWiseApp: App {
+    @StateObject private var uiState = GlobalUIState()
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -25,7 +26,7 @@ struct StepWiseApp: App {
 
     var body: some Scene {
         WindowGroup {
-            PreviewListView()
+            MainView()
         }
         .modelContainer(sharedModelContainer)
     }

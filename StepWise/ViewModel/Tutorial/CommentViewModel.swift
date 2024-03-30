@@ -8,14 +8,14 @@
 import SwiftUI
 import Combine
 
-class UserCommentViewModel: ObservableObject {
+class CommentViewModel: ObservableObject {
     @Published var userComments: [UserComment] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
 
     func fetchUserComments() {
         isLoading = true
-        let url = URL(string: "http://127.0.0.1:5000/api/comment")! // Replace with your actual URL
+        let url = URL(string: "http://127.0.0.1:5000/api/comment")!
 
         URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             DispatchQueue.main.async {

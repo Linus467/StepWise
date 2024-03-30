@@ -8,40 +8,40 @@
 import SwiftUI
 
 struct PreviewListView: View {
-    @StateObject private var viewModel = TutorialPreviewViewModel()
+    var tutorialList: [Tutorial] = []
+    var title : String = ""
     @State private var selectedTutorial: Tutorial? = nil
     
     var body: some View {
-        NavigationSplitView {
-            // Sidebar (Master view) now uses List
-            List(viewModel.tutorialPreview, id: \.self, selection: $selectedTutorial) { tutorial in
-                Button(action: {
-                    self.selectedTutorial = tutorial
-                }) {
-                    PreviewView(tutorial: tutorial)
+        VStack{
+            NavigationSplitView {
+                List(tutorialList, id: \.self, selection: $selectedTutorial) { tutorial in
+                    Button(action: {
+                        self.selectedTutorial = tutorial
+                    }) {
+                        PreviewView(tutorial: tutorial)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .foregroundStyle(.primary)
                 }
-                .buttonStyle(PlainButtonStyle()) // To maintain the button appearance
-                .foregroundStyle(.primary)
-            }
-            .navigationTitle("Tutorials")
-            .listStyle(PlainListStyle())
-        } detail: {
-            ZStack {
-                if let selectedTutorial = selectedTutorial {
-                    MenuView(viewModel: TutorialMenuViewModel(), tutorial: selectedTutorial)
-                } else {
-                    Text("Please select a tutorial")
-                        .foregroundStyle(.secondary)
+                .listStyle(PlainListStyle())
+            } detail: {
+                ZStack {
+                    if let selectedTutorial = selectedTutorial {
+                        MenuView(viewModel: MenuViewModel(), tutorial: selectedTutorial)
+                    } else {
+                        Text("Please select a tutorial")
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
-        }
-        .overlay(viewModel.isLoading ? ProgressView("Loading...") : nil)
-        .task {
-            await viewModel.fetchTutorials()
         }
     }
 }
 
 #Preview {
-    PreviewListView()
+    PreviewListView(tutorialList: [
+        Tutorial(id: UUID(), title: "Tutorial 1", tutorialKind: "Kind 1", user: User(id: UUID(), firstName: "John", lastName: "Doe", email: "john@example.com", isCreator: true), time: 1200, difficulty: 3, completed: false, description: "This is tutorial 1 description", previewPictureLink: URL(string: "https://example.com/tutorial1.jpg")!, previewType: "image", views: 500, steps: [], tools: [], materials: [], ratings: []),
+        Tutorial(id: UUID(), title: "Tutorial 2", tutorialKind: "Kind 2", user: User(id: UUID(), firstName: "Jane", lastName: "Doe", email: "jane@example.com", isCreator: false), time: 1500, difficulty: 2, completed: true, description: "This is tutorial 2 description", previewPictureLink: URL(string: "https://example.com/tutorial2.jpg")!, previewType: "image", views: 800, steps: [], tools: [], materials: [], ratings: [])
+    ], title: "Preview Tutorials")
 }

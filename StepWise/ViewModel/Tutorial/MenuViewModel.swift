@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class TutorialMenuViewModel: ObservableObject {
+class MenuViewModel: ObservableObject {
     @Published var isFavorite: Bool = false
     
     init(){

@@ -12,18 +12,18 @@ struct MaterialView: View {
 
     var body: some View {
         HStack{
-            Text("\(material.title)")
+            Text("\(material.title ?? " ")")
                 .font(.subheadline)
                 .padding()
                 .foregroundColor(.primary)
             Spacer()
-            Text("Qty: \(material.amount)")
+            Text("Qty: \(material.amount ?? 0)")
                 .font(.subheadline)
                 .padding()
                 .foregroundColor(.primary)
             Image(systemName: "square.stack.3d.down.right")
                 .padding(.leading, -15)
-            Link(destination: URL(string: material.link) ?? URL(string: "https://example.com")!) {
+            Link(destination: URL(string: material.link ?? "") ?? URL(string: "https://example.com")!) {
                 Image(systemName: "link.circle.fill")
                     .foregroundColor(.blue)
             }
@@ -35,8 +35,8 @@ struct MaterialView: View {
 struct TutorialMaterialView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            MaterialView(material: Material(id: UUID(), title: "Wood Planks", amount: 10, link: "https://example.com/material/woodplanks"))
-            MaterialView(material: Material(id: UUID(), title: "Nails", amount: 50, link: "https://example.com/material/nails"))
+            MaterialView(material: Material(id: UUID(), title: "Wood Planks", amount: 10, price: 10.0, link: "https://example.com/material/woodplanks"))
+            MaterialView(material: Material(id: UUID(), title: "Nails", amount: 50, price: 10.0, link: "https://example.com/material/nails"))
         }
     }
 }

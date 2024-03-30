@@ -7,12 +7,13 @@
 import SwiftUI
 
 struct MenuView: View {
-    @ObservedObject var viewModel: TutorialMenuViewModel
+    @ObservedObject var viewModel: MenuViewModel
     var tutorial: Tutorial
     @State private var showMaterials = false
     @State private var showTools = false
     @State private var isFavorite = false
     @State private var showSteps: Bool = false
+    @EnvironmentObject var uiState: GlobalUIState
     
     var body: some View {
         NavigationStack{
@@ -133,6 +134,12 @@ struct MenuView: View {
                     }
                 }
             }
+            .onAppear(){
+                uiState.showListView = false
+            }
+            .onDisappear(){
+                uiState.showListView = true
+            }
         }
     }
 }
@@ -177,16 +184,16 @@ struct TutorialMenuView_Previews: PreviewProvider {
                 Tool(id: UUID(), title: "Tool 2", amount: 2, link: "https://example.com/tool2")
             ],
             materials: [
-                Material(id: UUID(), title: "Material 1", amount: 3, link: "https://example.com/material1"),
-                Material(id: UUID(), title: "Material 2", amount: 1, link: "https://example.com/material2")
+                Material(id: UUID(), title: "Material 1", amount: 3, price: 10.0, link: "https://example.com/material1"),
+                Material(id: UUID(), title: "Material 2", amount: 1, price: 10.0, link: "https://example.com/material2")
             ],
             ratings: [
                 Rating(id: UUID(), user: user, rating: 4, text: "hello"),
                 Rating(id: UUID(), user: user, rating: 5, text: "test")
-            ],
-            userComments: []
+            ]
         )
         
-        return MenuView(viewModel: TutorialMenuViewModel(), tutorial: sampleTutorial)
+        return MenuView(viewModel: MenuViewModel(), tutorial: sampleTutorial)
+            .environmentObject(GlobalUIState())
     }
 }

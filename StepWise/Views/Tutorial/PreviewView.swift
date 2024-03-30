@@ -98,8 +98,7 @@ struct TutorialPreviewView_Pre: PreviewProvider {
             steps: sampleSteps,
             tools: [],
             materials: [],
-            ratings: [],
-            userComments: []
+            ratings: []
         )
         List{
             PreviewView(tutorial: sampleTutorial)

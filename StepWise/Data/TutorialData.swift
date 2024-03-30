@@ -23,13 +23,13 @@ struct Tutorial: Identifiable, Decodable, Hashable {
     var tools: [Tool]?
     var materials: [Material]?
     var ratings: [Rating]?
-    var userComments: [UserComment]?
 }
 
 struct Step: Identifiable, Decodable, Hashable {
     var id: UUID?
     var title: String?
     var subStepList: [SubStep]?
+    var userComments: [UserComment]?
 }
 
 struct SubStep: Identifiable, Decodable, Hashable {
@@ -38,33 +38,25 @@ struct SubStep: Identifiable, Decodable, Hashable {
     var content: Content?
 }
 
-enum Content: Codable, Hashable {
+enum Content: Decodable, Hashable {
     case text(TextContent)
     case picture(PictureContent)
     case video(VideoContent)
-    
-    private enum CodingKeys: String, CodingKey {
-        case text
-        case picture
-        case video
-    }
+    case none
 
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        if let textContent = try? container.decodeIfPresent(TextContent.self, forKey: .text) {
+        let container = try decoder.singleValueContainer()
+        if let textContent = try? container.decode(TextContent.self) {
             self = .text(textContent)
-        } else if let pictureContent = try? container.decodeIfPresent(PictureContent.self, forKey: .picture) {
+        } else if let pictureContent = try? container.decode(PictureContent.self) {
             self = .picture(pictureContent)
-        } else if let videoContent = try? container.decodeIfPresent(VideoContent.self, forKey: .video) {
+        } else if let videoContent = try? container.decode(VideoContent.self) {
             self = .video(videoContent)
         } else {
-            throw DecodingError.dataCorruptedError(forKey: .text, in: container, debugDescription: "Invalid content type")
+            self = .none
         }
     }
-
-    // Encoding function omitted for brevity
 }
-
 
 struct UserComment: Identifiable, Decodable, Hashable {
     var id: UUID?
@@ -110,9 +102,10 @@ struct Tool: Identifiable, Decodable, Hashable {
 }
 
 struct Material: Identifiable, Decodable, Hashable{
-    var id: UUID
-    var title: String
-    var amount: Int
-    var link : String
+    var id: UUID?
+    var title: String?
+    var amount: Int?
+    var price: Double?
+    var link : String?
 }
 
