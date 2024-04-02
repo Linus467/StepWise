@@ -32,12 +32,14 @@ struct StepsView: View {
                                     
                                     SubStepView(subStep: subStep);
                                     
-                                    Divider()
-                                        .padding(.vertical)
+                                    if steps.count != index {
+                                        Divider()
+                                            .padding(.vertical)
+                                    }
                                 }
                             }
                             .padding(.horizontal, 10)
-                            .padding(.vertical, 10)
+                            .padding(.top, 10)
                             .tag(index)
                             
                             //Add comments if its not empty
@@ -81,8 +83,8 @@ struct TutorialStepsView_Previews: PreviewProvider {
                 SubStep(id: UUID(), type: 1, content: .text(TextContent(id: UUID(), contentText: "Start cutting the wood as per measurements."))),
                 SubStep(id: UUID(), type: 1, content: .text(TextContent(id: UUID(), contentText: "Sand the wood surfaces for smoothness.")))
             ], userComments: [
-                UserComment(id: UUID(), stepID: UUID(), user: User(), text: "Comment about wood preparation."),
-                UserComment(id: UUID(), stepID: UUID(), user: User(), text: "Another comment about wood preparation.")
+                UserComment(id: UUID(), stepID: UUID(), user: User(id: UUID.init(), firstName: "Hans", lastName: "Peter", email: "sf", isCreator: false), text: "Comment about wood preparation."),
+                UserComment(id: UUID(), stepID: UUID(), user: User(id: UUID.init(), firstName: "Wolfgang", lastName: "Strungert", email: " ", isCreator: false), text: "Another comment about wood preparation.")
             ]),
             
             // Step 3: Assembly
@@ -109,5 +111,6 @@ struct TutorialStepsView_Previews: PreviewProvider {
                 UserComment(id: UUID(), stepID: UUID(), user: User(), text: "Another comment about completion.")
             ])
         ])
+        .environmentObject(GlobalUIState())
     }
 }

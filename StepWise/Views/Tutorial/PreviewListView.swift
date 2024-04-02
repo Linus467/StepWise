@@ -44,4 +44,5 @@ struct PreviewListView: View {
         Tutorial(id: UUID(), title: "Tutorial 1", tutorialKind: "Kind 1", user: User(id: UUID(), firstName: "John", lastName: "Doe", email: "john@example.com", isCreator: true), time: 1200, difficulty: 3, completed: false, description: "This is tutorial 1 description", previewPictureLink: URL(string: "https://example.com/tutorial1.jpg")!, previewType: "image", views: 500, steps: [], tools: [], materials: [], ratings: []),
         Tutorial(id: UUID(), title: "Tutorial 2", tutorialKind: "Kind 2", user: User(id: UUID(), firstName: "Jane", lastName: "Doe", email: "jane@example.com", isCreator: false), time: 1500, difficulty: 2, completed: true, description: "This is tutorial 2 description", previewPictureLink: URL(string: "https://example.com/tutorial2.jpg")!, previewType: "image", views: 800, steps: [], tools: [], materials: [], ratings: [])
     ], title: "Preview Tutorials")
+        .environmentObject(GlobalUIState())
 }
