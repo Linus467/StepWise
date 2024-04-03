@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StepsView: View {
     var steps: [Step]
+    var stepsTitle = ""
     //tracking current step
     @State private var currentStepIndex = 0
     @Environment(\.presentationMode) var presentationMode
@@ -16,6 +17,10 @@ struct StepsView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                #if os(macOS)
+                Text(stepsTitle)
+                    .font(.title)
+                #endif
                 //Progress bar
                 ProgressView(value: Double(currentStepIndex) / Double(steps.count-1))
                     .progressViewStyle(LinearProgressViewStyle())
@@ -26,11 +31,17 @@ struct StepsView: View {
                 TabView(selection: $currentStepIndex) {
                     //Create views for each steps in Tabview
                     ForEach(steps.indices, id: \.self) { index in
+                        
                         ScrollView(.vertical, showsIndicators: true) {
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(steps[index].subStepList!) { subStep in
                                     
-                                    SubStepView(subStep: subStep);
+                                    SubStepView(subStep: subStep)
+                                    #if os(macOS)
+//                                        .onAppear(){
+//                                            stepsTitle = steps[index].title
+//                                        }
+                                    #endif
                                     
                                     if steps.count != index {
                                         Divider()
@@ -47,14 +58,20 @@ struct StepsView: View {
                                 CommentsListView(commentList: steps[index].userComments ?? [])
                                     .padding(.top, 0)
                             }
+                            Spacer()
                             
                         }
                     }
                 }
+                #if os(iOS)
                 //activates Swipe gesture
                 .tabViewStyle(PageTabViewStyle())
+                #endif
+                
             }
+            #if os(iOS)
             .navigationBarTitle(steps[currentStepIndex].title ?? "No Title")
+            #endif
             
         }
     }

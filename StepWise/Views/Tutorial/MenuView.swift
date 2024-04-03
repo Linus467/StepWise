@@ -20,10 +20,34 @@ struct MenuView: View {
             ScrollView {
                 //MARK: -- Tutorial Information
                 VStack(alignment: .leading, spacing: 10) {
+                    #if os(iOS)
                     Text("Kind: \(tutorial.tutorialKind ?? " ")")
                         .font(.title3)
                         .foregroundColor(.secondary)
-                    
+                    #endif
+                    #if os(macOS)
+                    HStack {
+                        Text("Kind: \(tutorial.tutorialKind ?? " ")")
+                            .font(.title3)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        
+                        Button(action: viewModel.toggleFavorite) {
+                            Image(systemName: isFavorite ? "star.fill" : "star")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                        Button(action: {
+                            showSteps = true
+                        }) {
+                            Image(systemName: "play.circle.fill")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                    }
+                    #endif
                     // Display the tutorial description
                     Text(tutorial.description ?? "-")
                         .font(.body)
@@ -116,6 +140,7 @@ struct MenuView: View {
                 StepsView(steps: tutorial.steps ?? [])
             }
             .navigationTitle(tutorial.title ?? "No Title found")
+            #if IOS
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
@@ -134,6 +159,7 @@ struct MenuView: View {
                     }
                 }
             }
+            #endif
             .onAppear(){
                 uiState.showListView = false
             }
