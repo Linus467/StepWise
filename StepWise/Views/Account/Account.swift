@@ -6,20 +6,22 @@
 //
 
 import SwiftUI
+import Combine
 
 struct Account: View {
-    var user: User?
+    @EnvironmentObject var uiState: GlobalUIState
+    @StateObject var viewModel = AccountViewModel()
+    
     var body: some View {
         NavigationStack{
             VStack(alignment: .leading){
                 HStack{
-                    Text(user != nil ? "\(user!.firstName) \(user!.lastName)": "Account")
+                    Text(!viewModel.user.firstName.isEmpty ? "\(viewModel.user.firstName) \(viewModel.user.lastName)" : "Account")
                         .font(.title)
                         .bold()
                         .lineLimit(1)
                     
-                    //if user is not nil and a creator
-                    if(user != nil ? user!.isCreator : false){
+                    if viewModel.user.isCreator {
                         Text("•")
                             .font(.title)
                         Text("Creator")
@@ -29,30 +31,44 @@ struct Account: View {
                     }
                     Spacer()
                 }
-                Text(user != nil ? "\(user!.email)" : "")
+                Text(viewModel.user.email)
                 Divider()
                 List{
-                    HStack{
-//                        Button("test")
-//                            .buttonStyle(PlainButtonStyle())
-                    }
-                    HStack{
+                    Button("History", systemImage: "clock") {
                         
+                    }
+                    .font(.title2)
+                    .padding(2)
+                    
+                    Button("Favorites", systemImage: "star") {
+                        
+                    }
+                    .font(.title2)
+                    .padding(2)
+                    
+                    if viewModel.user.isCreator {
+                        Button("My Tutorials") {
+                            
+                        }
+                        .font(.title2)
                     }
                 }
                 .listStyle(PlainListStyle())
-                
-                
-                
                 Spacer()
             }
             .padding()
         }
+        .onAppear {
+            print("uiState: ", uiState.user_id.description + " --- " + uiState.session_key)
+            viewModel.fetchUser(userId: uiState.user_id.description, sessionKey: uiState.session_key)
+            print("User: " ,$viewModel.user)
+        }
     }
 }
 
-#Preview {
-    Account(
-        user: User(id: UUID.init(), firstName: "Linus", lastName: "Gierling", email: "Linusgi@gmx.de", isCreator: true)
-    )
+struct Account_Previews: PreviewProvider {
+    static var previews: some View {
+        Account()
+            .environmentObject(GlobalUIState())
+    }
 }

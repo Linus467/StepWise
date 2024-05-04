@@ -27,15 +27,20 @@ struct SearchView: View {
                     ProgressView()
                     Text("Loading...")
                 }
-            } else if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
+            } else if viewModel.errorMessage != nil{
+                Text("No Tutorials found")
+                    .font(.title)
+                    .padding()
+                Spacer()
             } else {
                 //MARK: -- Preview
-                PreviewListView(tutorialList: viewModel.tutorialPreview)
+                PreviewListView(tutorialList: $viewModel.tutorialPreview.wrappedValue)
             }
         }
         .environmentObject(uiState)
+        .onAppear(){
+            uiState.showListView = true
+        }
     }
 }
 

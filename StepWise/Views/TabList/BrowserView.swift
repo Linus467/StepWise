@@ -29,14 +29,14 @@ struct BrowserView: View {
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
+                PreviewListView(tutorialList: $viewModel.tutorialPreview.wrappedValue)
             } else {
-                
                 PreviewListView(tutorialList: viewModel.tutorialPreview)
             }
         }
         //load content 
         .onAppear {
-            viewModel.fetchTutorials()
+            viewModel.fetchBrowser()
         }
     }
 }

@@ -13,14 +13,25 @@ struct PreviewView: View {
         VStack {
             VStack{
                 //tutorial image
-                Image(systemName: "video.slash.circle")
-                    .resizable()
-                    .aspectRatio(16/10,contentMode: .fit)
-                    .scaledToFit()
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 200)
-                    .background(.gray)
-                    .cornerRadius(8)
-                    .padding(.horizontal, 5)
+                AsyncImage(url: tutorial.previewPictureLink){ image in
+                    image
+                        .resizable()
+                        .aspectRatio(16/10, contentMode: .fit)
+                        .scaledToFit()
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 200)
+                        .background(Color.gray)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 5)
+                } placeholder: {
+                    Image(systemName: "video.slash.circle")
+                        .resizable()
+                        .aspectRatio(16/10, contentMode: .fit)
+                        .scaledToFit()
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 200)
+                        .background(Color.gray)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 5)
+                }
                 
                 //Title Stack
                 HStack{
@@ -91,8 +102,8 @@ struct TutorialPreviewView_Pre: PreviewProvider {
             time: TimeInterval(10000),
             difficulty: 3,
             completed: true,
-            description: "A brief description of the tutorial.",
-            previewPictureLink: URL(string: "https://example.com/preview.jpg")!,
+            descriptionText: "A brief description of the tutorial.",
+            previewPictureLink: URL(string: "http://localhost:4566/picture/775512f9-26f7-4f26-af04-e6a73fc6ea05.jpg")!,
             previewType: "Image",
             views: 42,
             steps: sampleSteps,

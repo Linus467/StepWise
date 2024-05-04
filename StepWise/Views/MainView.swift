@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  MainView.swift		
 //  StepWise
 //
 //  Created by Linus Gierling on 30.03.24.
@@ -30,6 +30,11 @@ struct MainView: View {
                 .environmentObject(uiState)
                 .tabItem {
                     Label("Favorite", systemImage: "star")
+                }
+            Account()
+                .environmentObject(uiState)
+                .tabItem {
+                    Label("Account", systemImage: "person")
                 }
         }
     }

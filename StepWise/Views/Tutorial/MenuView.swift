@@ -49,7 +49,7 @@ struct MenuView: View {
                     }
                     #endif
                     // Display the tutorial description
-                    Text(tutorial.description ?? "-")
+                    Text(tutorial.descriptionText ?? "-")
                         .font(.body)
                     
                     // Display user and difficulty
@@ -140,7 +140,7 @@ struct MenuView: View {
                 StepsView(steps: tutorial.steps ?? [])
             }
             .navigationTitle(tutorial.title ?? "No Title found")
-            #if IOS
+            #if os(iOS)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
@@ -183,7 +183,7 @@ struct TutorialMenuView_Previews: PreviewProvider {
             time: 30,
             difficulty: 3,
             completed: false,
-            description: "This is a sample tutorial demonstrating how to create a SwiftUI app.",
+            descriptionText: "This is a sample tutorial demonstrating how to create a SwiftUI app.",
             previewPictureLink: URL(string: "https://example.com/image.jpg")!,
             previewType: "image",
             views: 100,

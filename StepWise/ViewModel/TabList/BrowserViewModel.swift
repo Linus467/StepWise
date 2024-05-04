@@ -5,51 +5,53 @@
 //  Created by Linus Gierling on 30.03.24.
 //
 
+
 import Foundation
+import Combine
 
 class BrowserViewModel: ObservableObject {
     @Published var tutorialPreview: [Tutorial] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    init(){
-        
+    private var cancellables: Set<AnyCancellable> = []
+    private let browserAPI: BrowserAPI
+
+    init(browserAPI: BrowserAPI = BrowserAPI()) {
+        self.browserAPI = browserAPI
     }
-    func fetchTutorials() {
+
+    func fetchBrowser() {
         isLoading = true
-        guard let url = URL(string: "http://127.0.0.1:5000/api/tutorial/id/?tutorial_id=123e4567-e89b-12d3-a456-426614174002") else {
-            errorMessage = "Invalid URL"
-            return
-        }
-
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                if let error = error {
-                    self?.errorMessage = "Network error: \(error.localizedDescription)"
-                    return
+        browserAPI.getBrowser()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    self?.isLoading = false
+                    self?.errorMessage = "Failed to fetch data: \(error.localizedDescription)"
+                case .finished:
+                    self?.isLoading = false
                 }
-                guard let data = data else {
-                    self?.errorMessage = "No data received from the server"
-                    return
-                }
-
-                do {
-                    self?.tutorialPreview  = try JSONDecoder().decode([Tutorial].self, from: data)
-                
-                } catch DecodingError.keyNotFound(let key, let context) {
-                    self?.errorMessage = "could not find key \(key) in JSON: \(context.debugDescription)"
-                } catch DecodingError.valueNotFound(let type, let context) {
-                    self?.errorMessage = "could not find type \(type) in JSON: \(context.debugDescription)"
-                } catch DecodingError.typeMismatch(let type, let context) {
-                    self?.errorMessage = "type mismatch for type \(type) in JSON: \(context.debugDescription)"
-                } catch DecodingError.dataCorrupted(let context) {
-                    self?.errorMessage = "data found to be corrupted in JSON: \(context.debugDescription)"
-                } catch let error as NSError {
-                    self?.errorMessage = "Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)"
-                }
+            }) { [weak self] tutorials in
+                self?.tutorialPreview = tutorials
             }
-        }.resume()
+            .store(in: &cancellables)
+    }
+    
+    
+    func fetchTutorialsByKind(kind: String) {
+        isLoading = true
+        browserAPI.getBrowserKind(kind: kind)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                self?.isLoading = false
+                if case .failure(let error) = completion {
+                    self?.errorMessage = "Network error: \(error.localizedDescription)"
+                }
+            }, receiveValue: { [weak self] tutorials in
+                self?.tutorialPreview = tutorials
+            })
+            .store(in: &cancellables)
     }
 }
-

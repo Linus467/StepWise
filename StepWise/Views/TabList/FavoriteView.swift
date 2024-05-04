@@ -23,7 +23,7 @@ struct FavoriteView: View {
                     ProgressView()
                     Text("Loading...")
                 }
-            } else if let errorMessage = viewModel.errorMessage {
+            } else if let errorMessage = viewModel.errorMessage, uiState.debug {
                 Text(errorMessage)
                     .foregroundColor(.red)
             } else {
