@@ -4,51 +4,76 @@
 //
 //  Created by Linus Gierling on 30.03.24.
 //
-
 import Foundation
+import Combine
 
 class HistoryViewModel: ObservableObject {
     @Published var tutorialPreview: [Tutorial] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    init(){
-        
+    private let historyAPI: HistoryAPI
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(historyAPI: HistoryAPI = HistoryAPI()) {
+        self.historyAPI = historyAPI
     }
-    func fetchTutorials() {
+    
+    func fetchTutorials(userId: String, sessionKey: String) {
         isLoading = true
-        guard let url = URL(string: "http://127.0.0.1:5000/api/tutorial") else {
-            errorMessage = "Invalid URL"
-            return
-        }
-
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                if let error = error {
-                    self?.errorMessage = "Network error: \(error.localizedDescription)"
-                    return
+        historyAPI.getHistoryList(userId: userId, sessionKey: sessionKey)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    self?.isLoading = false
+                case .failure(let error):
+                    self?.isLoading = false
+                    self?.errorMessage = error.localizedDescription
                 }
-                guard let data = data else {
-                    self?.errorMessage = "No data received from the server"
-                    return
+            }, receiveValue: { [weak self] tutorials in
+                self?.tutorialPreview = tutorials
+            })
+            .store(in: &cancellables)
+    }
+    
+    func deleteSingleTutorialHistory(userId: String, sessionKey: String, tutorialId: String) {
+        historyAPI.deleteHistorySingle(userId: userId, sessionKey: sessionKey, tutorialId: tutorialId)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    // Handle completion if needed
+                    break
+                case .failure(let error):
+                    self?.errorMessage = error.localizedDescription
                 }
-
-                do {
-                    self?.tutorialPreview  = try JSONDecoder().decode([Tutorial].self, from: data)
-                
-                } catch DecodingError.keyNotFound(let key, let context) {
-                    self?.errorMessage = "could not find key \(key) in JSON: \(context.debugDescription)"
-                } catch DecodingError.valueNotFound(let type, let context) {
-                    self?.errorMessage = "could not find type \(type) in JSON: \(context.debugDescription)"
-                } catch DecodingError.typeMismatch(let type, let context) {
-                    self?.errorMessage = "type mismatch for type \(type) in JSON: \(context.debugDescription)"
-                } catch DecodingError.dataCorrupted(let context) {
-                    self?.errorMessage = "data found to be corrupted in JSON: \(context.debugDescription)"
-                } catch let error as NSError {
-                    self?.errorMessage = "Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)"
+            }, receiveValue: { [weak self] success in
+                if success {
+                    // If deletion is successful, update the tutorial previews
+                    self?.fetchTutorials(userId: userId, sessionKey: sessionKey)
                 }
-            }
-        }.resume()
+            })
+            .store(in: &cancellables)
+    }
+    
+    func deleteAllTutorialHistory(userId: String, sessionKey: String) {
+        historyAPI.deleteHistory(userId: userId, sessionKey: sessionKey)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    // Handle completion if needed
+                    break
+                case .failure(let error):
+                    self?.errorMessage = error.localizedDescription
+                }
+            }, receiveValue: { [weak self] success in
+                if success {
+                    // If deletion is successful, update the tutorial previews
+                    self?.tutorialPreview = []
+                }
+            })
+            .store(in: &cancellables)
     }
 }

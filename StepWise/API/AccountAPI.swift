@@ -68,10 +68,9 @@ class AccountAPI {
     }
     
     func getUser(userId: String, session_key: String) -> AnyPublisher<User, Error> {
-         var request = URLRequest(url: baseURL.appendingPathComponent("/api/GetUser"))
-         request.httpMethod = "GET"
-         request.setValue(userId, forHTTPHeaderField: "User-Id")
-         request.setValue(session_key, forHTTPHeaderField: "Session-Key")
+        let path = "/api/GetUser"
+        let headers = ["user-id":userId, "session-key":session_key]
+        var request = createURLRequest(path: path, method: "GET", headers: headers)
          print(request.httpMethod?.description ?? "" )
         print("All Header Fields" + (request.allHTTPHeaderFields?.description ?? ""))
         

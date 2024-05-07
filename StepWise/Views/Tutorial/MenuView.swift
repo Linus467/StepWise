@@ -20,6 +20,21 @@ struct MenuView: View {
             ScrollView {
                 //MARK: -- Tutorial Information
                 VStack(alignment: .leading, spacing: 10) {
+                    AsyncImage(url: tutorial.previewPictureLink){ image in
+                        image
+                            .resizable()
+                            .aspectRatio(16/10, contentMode: .fit)
+                            .edgesIgnoringSafeArea(.all)
+                    } placeholder: {
+                        Image(systemName: "video.slash.circle")
+                            .resizable()
+                            .aspectRatio(16/10, contentMode: .fit)
+                            .scaledToFit()
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 200)
+                            .background(Color.gray)
+                            .cornerRadius(8)
+                    }
+
                     #if os(iOS)
                     Text("Kind: \(tutorial.tutorialKind ?? " ")")
                         .font(.title3)
@@ -48,6 +63,7 @@ struct MenuView: View {
                         .buttonStyle(BorderlessButtonStyle())
                     }
                     #endif
+                    
                     // Display the tutorial description
                     Text(tutorial.descriptionText ?? "-")
                         .font(.body)
@@ -184,7 +200,7 @@ struct TutorialMenuView_Previews: PreviewProvider {
             difficulty: 3,
             completed: false,
             descriptionText: "This is a sample tutorial demonstrating how to create a SwiftUI app.",
-            previewPictureLink: URL(string: "https://example.com/image.jpg")!,
+            previewPictureLink: URL(string: "http://localhost:4566/picture/6121d64b-21ae-4e61-887d-369a2704357e.jpg")!,
             previewType: "image",
             views: 100,
             steps: [

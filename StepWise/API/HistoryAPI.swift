@@ -27,7 +27,7 @@ class HistoryAPI {
     
     func getHistoryList(userId: String, sessionKey: String) -> AnyPublisher<[Tutorial], Error> {
         let path = "GetHistoryList"
-        let headers = ["user_id": userId, "session_key": sessionKey]
+        let headers = ["user-id": userId, "session-key": sessionKey]
         let request = createURLRequest(path: path, method: "GET", headers: headers)
         
         return URLSession.shared.dataTaskPublisher(for: request)
@@ -38,7 +38,7 @@ class HistoryAPI {
     
     func deleteHistorySingle(userId: String, sessionKey: String, tutorialId: String) -> AnyPublisher<Bool, Error> {
         let path = "DeleteHistorySingle"
-        let headers = ["user_id": userId, "session_key": sessionKey, "tutorial_id": tutorialId]
+        let headers = ["user-id": userId, "session-key": sessionKey, "tutorial_id": tutorialId]
         let request = createURLRequest(path: path, method: "DELETE", headers: headers)
         
         return URLSession.shared.dataTaskPublisher(for: request)
@@ -54,7 +54,7 @@ class HistoryAPI {
     
     func deleteHistory(userId: String, sessionKey: String) -> AnyPublisher<Bool, Error> {
         let path = "DeleteHistory"
-        let headers = ["user_id": userId, "session_key": sessionKey]
+        let headers = ["user-id": userId, "session-key": sessionKey]
         let request = createURLRequest(path: path, method: "DELETE", headers: headers)
         
         return URLSession.shared.dataTaskPublisher(for: request)

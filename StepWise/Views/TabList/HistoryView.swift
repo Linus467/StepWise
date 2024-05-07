@@ -31,7 +31,7 @@ struct HistoryView: View {
             }
         }
         .onAppear {
-            viewModel.fetchTutorials()
+            viewModel.fetchTutorials(userId: uiState.user_id.description, sessionKey: uiState.session_key.description)
         }
     }
 }
