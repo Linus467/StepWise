@@ -13,9 +13,6 @@ struct User: Identifiable, Decodable,  Hashable {
     var lastName: String
     var email: String
     var isCreator: Bool
-    var watchHistory: [WatchHistory?]?
-    var favoriteList: [Favorite?]?
-    var searchHistory: [SearchHistory?]?
     
     init(id: UUID = UUID(), firstName: String = "", lastName: String = "", email: String = "", isCreator: Bool = false, watchHistory: [WatchHistory]? = nil, favoriteList: [Favorite]? = nil, searchHistory: [SearchHistory]? = nil) {
         self.id = id
@@ -23,9 +20,6 @@ struct User: Identifiable, Decodable,  Hashable {
         self.lastName = lastName
         self.email = email
         self.isCreator = isCreator
-        self.watchHistory = watchHistory
-        self.favoriteList = favoriteList
-        self.searchHistory = searchHistory
     }
 }
 

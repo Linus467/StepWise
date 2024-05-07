@@ -24,6 +24,7 @@ class AccountViewModel: ObservableObject {
                 }
             }, receiveValue: { [weak self] user in
                 self?.user = user
+                print("user:", user)
             })
             .store(in: &cancellables)
     }

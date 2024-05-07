@@ -4,63 +4,57 @@
 //
 //  Created by Linus Gierling on 04.05.24.
 //
-
 import Foundation
 import Combine
 
-class FavoriteAPI {
-    private var cancellables = Set<AnyCancellable>()
-    private var baseURL: URL
+struct FavoritesAPI {
+    private let baseUrl = "http://127.0.0.1:5000/api"
 
-    init(baseURL: URL = URL(string: "http://127.0.0.1:5000/api/")!) {
-        self.baseURL = baseURL
-    }
+    func getFavoriteList(userId: String, sessionKey: String) -> AnyPublisher<[Tutorial], Error> {
+        guard let url = URL(string: "\(baseUrl)/GetFavorite") else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
 
-    private func createURLRequest(path: String, method: String, headers: [String: String] = [:], body: Data? = nil) -> URLRequest {
-        let url = baseURL.appendingPathComponent(path)
         var request = URLRequest(url: url)
-        request.httpMethod = method
-        headers.forEach { request.setValue($1, forHTTPHeaderField: $0) }
-        request.httpBody = body
-        return request
-    }
-    
-    func fetchFavorites(userId: String) -> AnyPublisher<[Tutorial], Error> {
-        let path = "GetFavorite"
-        let headers = ["user_id": userId]
-        let request = createURLRequest(path: path, method: "GET", headers: headers)
+        request.httpMethod = "GET"
+        request.setValue(sessionKey, forHTTPHeaderField: "Authorization")
+        request.setValue(userId, forHTTPHeaderField: "user-id")
+        request.setValue(sessionKey, forHTTPHeaderField: "session-key")
 
         return URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
+            .tryMap { data, response in
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                     throw URLError(.badServerResponse)
                 }
-                return output.data
+                return data
             }
             .decode(type: [Tutorial].self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }
-    
-    func removeFavorite(userId: String, tutorialId: String) -> AnyPublisher<Bool, Error> {
-        let path = "RemoveFavorite"
-        let headers = ["user_id": userId]
-        let parameters: [String: Any] = ["tutorial_id": tutorialId]
-        guard let body = try? JSONSerialization.data(withJSONObject: parameters) else {
+
+    func removeFavorite(userId: String, sessionKey: String, tutorialId: String) -> AnyPublisher<Bool, Error> {
+        guard let url = URL(string: "\(baseUrl)/RemoveFavorite") else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
-        let request = createURLRequest(path: path, method: "POST", headers: headers, body: body)
-        
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue(sessionKey, forHTTPHeaderField: "Authorization")
+        request.setValue(userId, forHTTPHeaderField: "user-id")
+        request.setValue(sessionKey, forHTTPHeaderField: "session-key")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body: [String: Any] = ["tutorial_id": tutorialId]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+
         return URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
+            .tryMap { data, response in
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                     throw URLError(.badServerResponse)
                 }
-                return output.data
+                let responseDict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+                return responseDict?["success"] as? Bool ?? false
             }
-            .decode(type: SimpleResponse.self, decoder: JSONDecoder())
-            .map { $0.success }
             .eraseToAnyPublisher()
     }
 }

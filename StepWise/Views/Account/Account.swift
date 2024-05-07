@@ -59,8 +59,8 @@ struct Account: View {
             .padding()
         }
         .onAppear {
-            print("uiState: ", uiState.user_id.description + " --- " + uiState.session_key)
-            viewModel.fetchUser(userId: uiState.user_id.description, sessionKey: uiState.session_key)
+            print("uiState: ", (uiState.user_id?.description ?? " ") + " --- " + (uiState.session_key ?? " "))
+            viewModel.fetchUser(userId: uiState.user_id?.description ?? " ", sessionKey: uiState.session_key ?? " ")
             print("User: " ,$viewModel.user)
         }
     }
