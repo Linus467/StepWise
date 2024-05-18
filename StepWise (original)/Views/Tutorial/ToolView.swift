@@ -12,18 +12,18 @@ struct ToolView: View {
 
     var body: some View {
         HStack {
-            Text(tool.title)
+            Text(tool.title ?? "Not Loaded")
                 .font(.subheadline)
                 .padding()
                 .foregroundColor(.primary)
             Spacer()
-            Text("Qty: \(tool.amount)")
+            Text("Qty: \(tool.amount ?? 0)")
                 .font(.subheadline)
                 .padding()
                 .foregroundColor(.primary)
             Image(systemName: "wrench.and.screwdriver.fill") // Tool icon
                 .padding(.leading, -15)
-            Link(destination: URL(string: tool.link) ?? URL(string: "https://example.com")!) {
+            Link(destination: URL(string: tool.link ?? "Error") ?? URL(string: "https://example.com")!) {
                 Image(systemName: "link.circle.fill")
                     .foregroundColor(.blue)
             }
@@ -35,8 +35,8 @@ struct ToolView: View {
 struct TutorialToolView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            ToolView(tool: Tool(id: UUID(), title: "Hammer", amount: 1, link: "https://example.com/tool/hammer", price: 5.0))
-            ToolView(tool: Tool(id: UUID(), title: "Screwdriver", amount: 2, link: "https://example.com/tool/screwdriver", price: 5.0))
+            ToolView(tool: Tool(id: UUID(), title: "Hammer", amount: 1, link: "https://example.com/tool/hammer"))
+            ToolView(tool: Tool(id: UUID(), title: "Screwdriver", amount: 2, link: "https://example.com/tool/screwdriver"))
         }
     }
 }

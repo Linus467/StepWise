@@ -95,11 +95,11 @@ struct VideoContent: Identifiable, Codable, Hashable {
 }
 
 struct Tool: Identifiable, Decodable, Hashable {
-    var id: UUID
-    var title: String
-    var amount: Int
-    var link: String
-    var price: Double
+    var id: UUID?
+    var title: String?
+    var amount: Int?
+    var link: String?
+    var price: Double?
 }
 
 struct Material: Identifiable, Decodable, Hashable{

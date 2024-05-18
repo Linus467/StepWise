@@ -222,8 +222,8 @@ struct TutorialMenuView_Previews: PreviewProvider {
                 )
             ],
             tools: [
-                Tool(id: UUID(), title: "Tool 1", amount: 1, link: "https://example.com/tool1"),
-                Tool(id: UUID(), title: "Tool 2", amount: 2, link: "https://example.com/tool2")
+                Tool(id: UUID(), title: "Tool 1", amount: 1, link: "https://example.com/tool1", price: 5.0),
+                Tool(id: UUID(), title: "Tool 2", amount: 2, link: "https://example.com/tool2", price: 5.0)
             ],
             materials: [
                 Material(id: UUID(), title: "Material 1", amount: 3, price: 10.0, link: "https://example.com/material1"),
