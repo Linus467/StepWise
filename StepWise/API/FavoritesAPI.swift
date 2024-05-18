@@ -8,7 +8,7 @@ import Foundation
 import Combine
 
 struct FavoritesAPI {
-    private let baseUrl = "http://127.0.0.1:5000/api"
+    private let baseUrl = "http://52.28.42.177:80/api"
 
     func getFavoriteList(userId: String, sessionKey: String) -> AnyPublisher<[Tutorial], Error> {
         guard let url = URL(string: "\(baseUrl)/GetFavorite") else {

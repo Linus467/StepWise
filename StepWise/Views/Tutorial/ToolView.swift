@@ -35,8 +35,8 @@ struct ToolView: View {
 struct TutorialToolView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            ToolView(tool: Tool(id: UUID(), title: "Hammer", amount: 1, link: "https://example.com/tool/hammer"))
-            ToolView(tool: Tool(id: UUID(), title: "Screwdriver", amount: 2, link: "https://example.com/tool/screwdriver"))
+            ToolView(tool: Tool(id: UUID(), title: "Hammer", amount: 1, link: "https://example.com/tool/hammer", price: 5.0))
+            ToolView(tool: Tool(id: UUID(), title: "Screwdriver", amount: 2, link: "https://example.com/tool/screwdriver", price: 5.0))
         }
     }
 }

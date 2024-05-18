@@ -12,7 +12,7 @@ class QueryAPI {
     private var cancellables = Set<AnyCancellable>()
     private var baseURL: URL
 
-    init(baseURL: URL = URL(string: "http://127.0.0.1:5000/api/")!) {
+    init(baseURL: URL = URL(string: "http://52.28.42.177:80/api/")!) {
         self.baseURL = baseURL
     }
 

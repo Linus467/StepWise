@@ -34,7 +34,7 @@ class SearchViewModel: ObservableObject {
     func searchTutorials(query: String) {
         isLoading = true
         
-        let url = URL(string: "http://127.0.0.1:5000/api/QueryString")!
+        let url = URL(string: "http://52.28.42.177:80/api/QueryString")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
