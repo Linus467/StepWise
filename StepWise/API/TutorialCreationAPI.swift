@@ -394,26 +394,45 @@ class TutorialCreationAPI {
     }
     
     func getTutorial(tutorialId: UUID, userId: String, sessionKey: String) -> AnyPublisher<Tutorial, Error> {
-            guard let url = URL(string: "\(baseURL)tutorial/id/") else {
-                fatalError("Invalid URL")
-            }
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            request.addValue(tutorialId.uuidString, forHTTPHeaderField: "tutorial-id")
-            request.addValue(userId, forHTTPHeaderField: "user-id")
-            request.addValue(sessionKey, forHTTPHeaderField: "session-key")
-            
-            return URLSession.shared.dataTaskPublisher(for: request)
-                .tryMap { output in
-                    guard let response = output.response as? HTTPURLResponse, response.statusCode == 200 else {
-                        throw URLError(.badServerResponse)
-                    }
-                    return output.data
-                }
-                .decode(type: Tutorial.self, decoder: JSONDecoder())
-                .eraseToAnyPublisher()
+        guard let url = URL(string: "\(baseURL)tutorial/id/") else {
+            fatalError("Invalid URL")
         }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue(tutorialId.uuidString, forHTTPHeaderField: "tutorial-id")
+        request.addValue(userId, forHTTPHeaderField: "user-id")
+        request.addValue(sessionKey, forHTTPHeaderField: "session-key")
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { output in
+                guard let response = output.response as? HTTPURLResponse, response.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return output.data
+            }
+            .decode(type: Tutorial.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+    }
     
-    
+    func getMyTutorials(userId: String, sessionKey: String) -> AnyPublisher<[Tutorial], Error> {
+        let path = "myTutorial"
+        let headers: [String: String] = [
+            "user-id": userId,
+            "session-key": sessionKey
+        ]
+        let request = createURLRequest(path: path, method: "GET", headers: headers)
+
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { output in
+                guard let httpResponse = output.response as? HTTPURLResponse,
+                      httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return output.data
+            }
+            .decode(type: [Tutorial].self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+    }
+
 }

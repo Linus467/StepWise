@@ -48,6 +48,8 @@
 		1560228E2BD3D64400605939 /* AccountAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1560228D2BD3D64400605939 /* AccountAPI.swift */; };
 		156022902BD3D7BE00605939 /* AccountAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1560228F2BD3D7BE00605939 /* AccountAPITest.swift */; };
 		156022942BD401D500605939 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156022932BD401D500605939 /* AccountViewModel.swift */; };
+		157553B72BF8BF17006BCEAD /* ContentMyTutorials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553B62BF8BF17006BCEAD /* ContentMyTutorials.swift */; };
+		157553B92BF8C2B0006BCEAD /* CreationMyTutorialsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553B82BF8C2B0006BCEAD /* CreationMyTutorialsViewModel.swift */; };
 		1585FDBD2BA07AA500B80AE8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1585FDBC2BA07AA500B80AE8 /* Post.swift */; };
 		1585FDC12BA07B4B00B80AE8 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1585FDC02BA07B4B00B80AE8 /* ContentViewModel.swift */; };
 		158D43582B9F36C600F1DAE1 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158D43572B9F36C600F1DAE1 /* SwiftUIView.swift */; };
@@ -151,6 +153,8 @@
 		1560228D2BD3D64400605939 /* AccountAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAPI.swift; sourceTree = "<group>"; };
 		1560228F2BD3D7BE00605939 /* AccountAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAPITest.swift; sourceTree = "<group>"; };
 		156022932BD401D500605939 /* AccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
+		157553B62BF8BF17006BCEAD /* ContentMyTutorials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentMyTutorials.swift; sourceTree = "<group>"; };
+		157553B82BF8C2B0006BCEAD /* CreationMyTutorialsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationMyTutorialsViewModel.swift; sourceTree = "<group>"; };
 		1585FDBC2BA07AA500B80AE8 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		1585FDC02BA07B4B00B80AE8 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		158D43572B9F36C600F1DAE1 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
@@ -251,8 +255,8 @@
 		1514F4022BB2EB4C003B4E52 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				15B3269F2BF89F7900965890 /* Creation */,
 				1516B9912BB81FD5006670CC /* MainView.swift */,
+				15B3269F2BF89F7900965890 /* Creation */,
 				15124FDB2BBC5ED6008272FE /* Account */,
 				1516B9802BB80E85006670CC /* TabList */,
 				1516B97D2BB7772B006670CC /* Tutorial */,
@@ -439,6 +443,7 @@
 				15B3268D2BF89F6300965890 /* CreationMenuWrapperViewModel.swift */,
 				15B3268E2BF89F6300965890 /* CreationSubStepViewModel.swift */,
 				15B3268F2BF89F6300965890 /* EmptyContentViewModel.swift */,
+				157553B82BF8C2B0006BCEAD /* CreationMyTutorialsViewModel.swift */,
 			);
 			path = Creation;
 			sourceTree = "<group>";
@@ -446,6 +451,7 @@
 		15B3269F2BF89F7900965890 /* Creation */ = {
 			isa = PBXGroup;
 			children = (
+				157553B62BF8BF17006BCEAD /* ContentMyTutorials.swift */,
 				15B326962BF89F7900965890 /* ContentPicker.swift */,
 				15B326972BF89F7900965890 /* ContentUploadView.swift */,
 				15B326982BF89F7900965890 /* CreationMaterialView.swift */,
@@ -592,6 +598,7 @@
 				1560228B2BD1396F00605939 /* UserStorageLocal.swift in Sources */,
 				1560228E2BD3D64400605939 /* AccountAPI.swift in Sources */,
 				1514F3FC2BB1CAE4003B4E52 /* MainContentView.swift in Sources */,
+				157553B92BF8C2B0006BCEAD /* CreationMyTutorialsViewModel.swift in Sources */,
 				1521C0332B9F0C81009D8A43 /* ContentView.swift in Sources */,
 				15124FDF2BBD5307008272FE /* AccountCreation.swift in Sources */,
 				1514F40B2BB2EC03003B4E52 /* SubStepData.swift in Sources */,
@@ -624,6 +631,7 @@
 				15E7FCD32BB5E1B000768247 /* MenuViewModel.swift in Sources */,
 				15B326A82BF89F7900965890 /* EmptyContentView.swift in Sources */,
 				1514F4112BB2EC4C003B4E52 /* SearchHistoryData.swift in Sources */,
+				157553B72BF8BF17006BCEAD /* ContentMyTutorials.swift in Sources */,
 				15B326A52BF89F7900965890 /* CreationStepsView.swift in Sources */,
 				15124FDD2BBC5EED008272FE /* Account.swift in Sources */,
 				15A36E1B2BB483E4009A5306 /* Tutorial.json in Sources */,

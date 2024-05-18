@@ -11,6 +11,7 @@ struct PreviewListView: View {
     var tutorialList: [Tutorial] = []
     var title : String = ""
     @State private var selectedTutorial: Tutorial? = nil
+    @EnvironmentObject var uiState: GlobalUIState
     
     var body: some View {
         VStack{
@@ -28,7 +29,7 @@ struct PreviewListView: View {
             } detail: {
                 ZStack {
                     if let selectedTutorial = selectedTutorial {
-                        MenuView(viewModel: MenuViewModel(), tutorial: selectedTutorial)
+                        MenuView(viewModel: MenuViewModel(userId: uiState.user_id?.uuidString ?? "", sessionKey: uiState.session_key?.description ?? "", tutorialId: selectedTutorial.id?.description ?? ""), tutorial: selectedTutorial)
                     } else {
                         Text("Please select a tutorial")
                             .foregroundStyle(.secondary)

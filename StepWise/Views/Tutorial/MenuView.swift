@@ -234,8 +234,10 @@ struct TutorialMenuView_Previews: PreviewProvider {
                 Rating(id: UUID(), user: user, rating: 5, text: "test")
             ]
         )
-        
-        return MenuView(viewModel: MenuViewModel(), tutorial: sampleTutorial)
+        var uiState = GlobalUIState()
+        return MenuView(
+            viewModel: MenuViewModel(
+                userId: uiState.user_id?.description ?? " ", sessionKey: uiState.session_key?.description ?? " ", tutorialId: "123e4567-e89b-12d3-a456-426614174002"), tutorial: sampleTutorial)
             .environmentObject(GlobalUIState())
     }
 }
