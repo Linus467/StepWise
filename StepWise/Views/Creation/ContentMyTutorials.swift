@@ -18,7 +18,7 @@ struct ContentMyTutorials: View {
             List {
                 if let myTutorials = viewModel.myTutorialsList {
                     ForEach(myTutorials, id: \.id) { tutorial in
-                        NavigationLink(destination: CreationMenuView(tutorial: tutorial.id?.description ?? "")) {
+                        NavigationLink(destination: CreationMenuView(tutorial: tutorial)) {
                             TutorialRow(tutorial: tutorial)
                         }
                         .swipeActions {

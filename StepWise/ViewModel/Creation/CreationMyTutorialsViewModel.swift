@@ -44,6 +44,7 @@ class CreationMyTutorialsViewModel: ObservableObject {
                 }
             }, receiveValue: { [weak self] tutorials in
                 self?.myTutorialsList = tutorials
+                print("Tutorial Received TutorialEdit: \(tutorials)")
             })
             .store(in: &cancellables)
     }

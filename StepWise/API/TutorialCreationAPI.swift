@@ -439,4 +439,66 @@ class TutorialCreationAPI {
             .eraseToAnyPublisher()
     }
 
+    func editMaterial(tutorialId: String, material: Material, userId: String, sessionKey: String) -> AnyPublisher<Bool, Error> {
+        let path = "EditMaterial"
+        let parameters: [String: Any] = [
+            "tutorial_id": tutorialId,
+            "material_id": material.id!,
+            "title": material.title!,
+            "amount": material.amount!,
+            "price": material.price!,
+            "link": material.link!
+        ]
+        let headers: [String: String] = [
+            "user-id": userId,
+            "session-key": sessionKey
+        ]
+        guard let body = try? JSONSerialization.data(withJSONObject: parameters) else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
+        let request = createURLRequest(path: path, method: "PUT", headers: headers, body: body)
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { output in
+                guard let httpResponse = output.response as? HTTPURLResponse,
+                      httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return true
+            }
+            .eraseToAnyPublisher()
+    }
+
+    func editTool(tutorialId: String, tool: Tool, userId: String, sessionKey: String) -> AnyPublisher<Bool, Error> {
+        let path = "EditTool"
+        let parameters: [String: Any] = [
+            "tutorial_id": tutorialId,
+            "tool_id": tool.id,
+            "title": tool.title,
+            "amount": tool.amount,
+            "price": tool.price,
+            "link": tool.link
+        ]
+        let headers: [String: String] = [
+            "user-id": userId,
+            "session-key": sessionKey
+        ]
+        guard let body = try? JSONSerialization.data(withJSONObject: parameters) else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
+        let request = createURLRequest(path: path, method: "PUT", headers: headers, body: body)
+
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { output in
+                guard let httpResponse = output.response as? HTTPURLResponse,
+                      httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return true
+            }
+            .eraseToAnyPublisher()
+    
+
+    }
+
 }

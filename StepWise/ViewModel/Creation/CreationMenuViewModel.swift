@@ -27,8 +27,15 @@ class CreationMenuViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     
-    init(api: TutorialCreationAPI) {
+    init(api: TutorialCreationAPI, tutotrial: Tutorial) {
         self.api = api
+        self.tutorial = tutorial
+        print("CreationMenuViewModel received Tutorial \(String(describing: tutorial))")
+        setupBindings()
+    }
+    init(tutorial: Tutorial) {
+        self.tutorial = tutorial
+        print("CreationMenuViewModel received Tutorial \(String(describing: tutorial))")
         setupBindings()
     }
     init(){
@@ -101,8 +108,8 @@ class CreationMenuViewModel: ObservableObject {
             })
             .store(in: &cancellables)
     }
-    func addMaterial(material: Material, user_id: String, session_key: String, tutorial_id:String) {
-         api.addMaterial(parameters: ["title": material.title!, "amount": material.amount!, "link": material.link!], user_Id: user_id, session_key: session_key, tutorial_id: tutorial_id)
+    func addMaterial(material: Material, user_id: String, session_key: String, tutorial_id:UUID) {
+        api.addMaterial(parameters: ["title": material.title!, "amount": material.amount!, "link": material.link!], user_Id: user_id, session_key: session_key, tutorial_id: tutorial_id.description)
              .sink(receiveCompletion: { completion in
                  switch completion {
                  case .finished:
@@ -163,4 +170,39 @@ class CreationMenuViewModel: ObservableObject {
              })
              .store(in: &cancellables)
      }
+    
+    func editMaterial(tutorialId: String, material: Material, userId: String, sessionKey: String) {
+        api.editMaterial(tutorialId: tutorialId, material: material, userId: userId, sessionKey: sessionKey)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    print("Successfully updated material.")
+                    self?.fetchTutorial(tutorialId: UUID(uuidString: tutorialId) ?? UUID(), user_id: userId, session_key: sessionKey)
+                case .failure(let error):
+                    print("Error updating material: \(error.localizedDescription)")
+                }
+            }, receiveValue: { success in
+                print("Material update was successful: \(success)")
+            })
+            .store(in: &cancellables)
+    }
+
+    func editTool(tutorialId: String, tool: Tool, userId: String, sessionKey: String) {
+        // Assuming Tool properties are guaranteed to be non-nil where this method is called
+        api.editTool(tutorialId: tutorialId, tool: tool, userId: userId, sessionKey: sessionKey)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    print("Successfully updated tool.")
+                    self?.fetchTutorial(tutorialId: UUID(uuidString: tutorialId) ?? UUID(), user_id: userId, session_key: sessionKey)
+                case .failure(let error):
+                    print("Error updating tool: \(error.localizedDescription)")
+                }
+            }, receiveValue: { success in
+                print("Tool update was successful: \(success)")
+            })
+            .store(in: &cancellables)
+    }
  }

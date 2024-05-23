@@ -50,7 +50,13 @@
 		156022942BD401D500605939 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156022932BD401D500605939 /* AccountViewModel.swift */; };
 		157553B72BF8BF17006BCEAD /* ContentMyTutorials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553B62BF8BF17006BCEAD /* ContentMyTutorials.swift */; };
 		157553B92BF8C2B0006BCEAD /* CreationMyTutorialsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553B82BF8C2B0006BCEAD /* CreationMyTutorialsViewModel.swift */; };
-		157553BD2BF8EE4E006BCEAD /* CreationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553BC2BF8EE4E006BCEAD /* CreationDetailView.swift */; };
+		157553C02BFF607F006BCEAD /* CreationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553BF2BFF607F006BCEAD /* CreationHeaderView.swift */; };
+		157553C22BFF60AD006BCEAD /* CreationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553C12BFF60AD006BCEAD /* CreationDetailView.swift */; };
+		157553C42BFF60F0006BCEAD /* CreationToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553C32BFF60F0006BCEAD /* CreationToolView.swift */; };
+		157553C72BFF6491006BCEAD /* CreationToolEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553C62BFF6491006BCEAD /* CreationToolEditView.swift */; };
+		157553C92BFF64F5006BCEAD /* CreationMaterialEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553C82BFF64F5006BCEAD /* CreationMaterialEditView.swift */; };
+		157553CB2BFF66CB006BCEAD /* CreationMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553CA2BFF66CB006BCEAD /* CreationMenuView.swift */; };
+		157553CD2BFF6A61006BCEAD /* CreationMaterialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157553CC2BFF6A61006BCEAD /* CreationMaterialView.swift */; };
 		1585FDBD2BA07AA500B80AE8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1585FDBC2BA07AA500B80AE8 /* Post.swift */; };
 		1585FDC12BA07B4B00B80AE8 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1585FDC02BA07B4B00B80AE8 /* ContentViewModel.swift */; };
 		158D43582B9F36C600F1DAE1 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158D43572B9F36C600F1DAE1 /* SwiftUIView.swift */; };
@@ -68,11 +74,8 @@
 		15B326952BF89F6300965890 /* EmptyContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B3268F2BF89F6300965890 /* EmptyContentViewModel.swift */; };
 		15B326A02BF89F7900965890 /* ContentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B326962BF89F7900965890 /* ContentPicker.swift */; };
 		15B326A12BF89F7900965890 /* ContentUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B326972BF89F7900965890 /* ContentUploadView.swift */; };
-		15B326A22BF89F7900965890 /* CreationMaterialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B326982BF89F7900965890 /* CreationMaterialView.swift */; };
-		15B326A32BF89F7900965890 /* CreationMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B326992BF89F7900965890 /* CreationMenuView.swift */; };
 		15B326A52BF89F7900965890 /* CreationStepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B3269B2BF89F7900965890 /* CreationStepsView.swift */; };
 		15B326A62BF89F7900965890 /* CreationSubStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B3269C2BF89F7900965890 /* CreationSubStepView.swift */; };
-		15B326A72BF89F7900965890 /* CreationToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B3269D2BF89F7900965890 /* CreationToolView.swift */; };
 		15B326A82BF89F7900965890 /* EmptyContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B3269E2BF89F7900965890 /* EmptyContentView.swift */; };
 		15D679832BE65A7500E5C566 /* HistoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D679822BE65A7500E5C566 /* HistoryAPI.swift */; };
 		15D679852BE65BAF00E5C566 /* QueryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D679842BE65BAF00E5C566 /* QueryAPI.swift */; };
@@ -154,7 +157,13 @@
 		156022932BD401D500605939 /* AccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		157553B62BF8BF17006BCEAD /* ContentMyTutorials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentMyTutorials.swift; sourceTree = "<group>"; };
 		157553B82BF8C2B0006BCEAD /* CreationMyTutorialsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationMyTutorialsViewModel.swift; sourceTree = "<group>"; };
-		157553BC2BF8EE4E006BCEAD /* CreationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationDetailView.swift; sourceTree = "<group>"; };
+		157553BF2BFF607F006BCEAD /* CreationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationHeaderView.swift; sourceTree = "<group>"; };
+		157553C12BFF60AD006BCEAD /* CreationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationDetailView.swift; sourceTree = "<group>"; };
+		157553C32BFF60F0006BCEAD /* CreationToolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationToolView.swift; sourceTree = "<group>"; };
+		157553C62BFF6491006BCEAD /* CreationToolEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationToolEditView.swift; sourceTree = "<group>"; };
+		157553C82BFF64F5006BCEAD /* CreationMaterialEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationMaterialEditView.swift; sourceTree = "<group>"; };
+		157553CA2BFF66CB006BCEAD /* CreationMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationMenuView.swift; sourceTree = "<group>"; };
+		157553CC2BFF6A61006BCEAD /* CreationMaterialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationMaterialView.swift; sourceTree = "<group>"; };
 		1585FDBC2BA07AA500B80AE8 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		1585FDC02BA07B4B00B80AE8 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		158D43572B9F36C600F1DAE1 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
@@ -172,11 +181,8 @@
 		15B3268F2BF89F6300965890 /* EmptyContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyContentViewModel.swift; sourceTree = "<group>"; };
 		15B326962BF89F7900965890 /* ContentPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPicker.swift; sourceTree = "<group>"; };
 		15B326972BF89F7900965890 /* ContentUploadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentUploadView.swift; sourceTree = "<group>"; };
-		15B326982BF89F7900965890 /* CreationMaterialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationMaterialView.swift; sourceTree = "<group>"; };
-		15B326992BF89F7900965890 /* CreationMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationMenuView.swift; sourceTree = "<group>"; };
 		15B3269B2BF89F7900965890 /* CreationStepsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationStepsView.swift; sourceTree = "<group>"; };
 		15B3269C2BF89F7900965890 /* CreationSubStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationSubStepView.swift; sourceTree = "<group>"; };
-		15B3269D2BF89F7900965890 /* CreationToolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationToolView.swift; sourceTree = "<group>"; };
 		15B3269E2BF89F7900965890 /* EmptyContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyContentView.swift; sourceTree = "<group>"; };
 		15D679822BE65A7500E5C566 /* HistoryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryAPI.swift; sourceTree = "<group>"; };
 		15D679842BE65BAF00E5C566 /* QueryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryAPI.swift; sourceTree = "<group>"; };
@@ -405,6 +411,19 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		157553BE2BFF5F50006BCEAD /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				157553BF2BFF607F006BCEAD /* CreationHeaderView.swift */,
+				157553C12BFF60AD006BCEAD /* CreationDetailView.swift */,
+				157553C32BFF60F0006BCEAD /* CreationToolView.swift */,
+				157553C62BFF6491006BCEAD /* CreationToolEditView.swift */,
+				157553CC2BFF6A61006BCEAD /* CreationMaterialView.swift */,
+				157553C82BFF64F5006BCEAD /* CreationMaterialEditView.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
 		15A36E172BB48387009A5306 /* TestJSONs */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,15 +467,13 @@
 		15B3269F2BF89F7900965890 /* Creation */ = {
 			isa = PBXGroup;
 			children = (
+				157553CA2BFF66CB006BCEAD /* CreationMenuView.swift */,
+				157553BE2BFF5F50006BCEAD /* Menu */,
 				157553B62BF8BF17006BCEAD /* ContentMyTutorials.swift */,
 				15B326962BF89F7900965890 /* ContentPicker.swift */,
 				15B326972BF89F7900965890 /* ContentUploadView.swift */,
-				15B326982BF89F7900965890 /* CreationMaterialView.swift */,
-				15B326992BF89F7900965890 /* CreationMenuView.swift */,
-				157553BC2BF8EE4E006BCEAD /* CreationDetailView.swift */,
 				15B3269B2BF89F7900965890 /* CreationStepsView.swift */,
 				15B3269C2BF89F7900965890 /* CreationSubStepView.swift */,
-				15B3269D2BF89F7900965890 /* CreationToolView.swift */,
 				15B3269E2BF89F7900965890 /* EmptyContentView.swift */,
 			);
 			path = Creation;
@@ -599,23 +616,25 @@
 				1521C0332B9F0C81009D8A43 /* ContentView.swift in Sources */,
 				15124FDF2BBD5307008272FE /* AccountCreation.swift in Sources */,
 				1514F40B2BB2EC03003B4E52 /* SubStepData.swift in Sources */,
+				157553C42BFF60F0006BCEAD /* CreationToolView.swift in Sources */,
 				159626B22BCFD6C4000A1EF1 /* ApiResponses.swift in Sources */,
 				15A36E142BB47035009A5306 /* MaterialData.swift in Sources */,
 				1514F3FE2BB2E97E003B4E52 /* PreviewView.swift in Sources */,
 				15038D402BB32A99008C82D2 /* CommentListView.swift in Sources */,
 				15A36E162BB4709D009A5306 /* RatingData.swift in Sources */,
 				1521C0352B9F0C81009D8A43 /* Item.swift in Sources */,
-				15B326A22BF89F7900965890 /* CreationMaterialView.swift in Sources */,
 				1516B97F2BB80282006670CC /* BrowserViewModel.swift in Sources */,
 				15B326A12BF89F7900965890 /* ContentUploadView.swift in Sources */,
 				1585FDC12BA07B4B00B80AE8 /* ContentViewModel.swift in Sources */,
 				1516B9902BB81DE2006670CC /* FavoriteViewModel.swift in Sources */,
 				15E7FCCF2BB5D62300768247 /* MaterialView.swift in Sources */,
+				157553C72BFF6491006BCEAD /* CreationToolEditView.swift in Sources */,
+				157553CD2BFF6A61006BCEAD /* CreationMaterialView.swift in Sources */,
 				15B326952BF89F6300965890 /* EmptyContentViewModel.swift in Sources */,
 				15D679832BE65A7500E5C566 /* HistoryAPI.swift in Sources */,
 				1516B9952BB82060006670CC /* GlobalUIState.swift in Sources */,
-				157553BD2BF8EE4E006BCEAD /* CreationDetailView.swift in Sources */,
 				15D679872BE65CD100E5C566 /* FavoritesAPI.swift in Sources */,
+				157553C22BFF60AD006BCEAD /* CreationDetailView.swift in Sources */,
 				15E7FCC92BB5B9A500768247 /* SupStepView.swift in Sources */,
 				158D43582B9F36C600F1DAE1 /* SwiftUIView.swift in Sources */,
 				1516B98A2BB81CAA006670CC /* HistoryViewModel.swift in Sources */,
@@ -633,6 +652,7 @@
 				15124FDD2BBC5EED008272FE /* Account.swift in Sources */,
 				15A36E1B2BB483E4009A5306 /* Tutorial.json in Sources */,
 				1514F41B2BB2ECCE003B4E52 /* VideoContentData.swift in Sources */,
+				157553CB2BFF66CB006BCEAD /* CreationMenuView.swift in Sources */,
 				15038D432BB33901008C82D2 /* CommentViewModel.swift in Sources */,
 				15B326922BF89F6300965890 /* CreationMenuViewModel.swift in Sources */,
 				1514F40D2BB2EC10003B4E52 /* UserCommentData.swift in Sources */,
@@ -641,14 +661,13 @@
 				15B326A02BF89F7900965890 /* ContentPicker.swift in Sources */,
 				1514F4152BB2EC90003B4E52 /* TutorialRatingData.swift in Sources */,
 				15E7FCCB2BB5D2C800768247 /* MenuView.swift in Sources */,
-				15B326A72BF89F7900965890 /* CreationToolView.swift in Sources */,
-				15B326A32BF89F7900965890 /* CreationMenuView.swift in Sources */,
 				1514F40F2BB2EC25003B4E52 /* WatchHistoryData.swift in Sources */,
 				1516B9922BB81FD5006670CC /* MainView.swift in Sources */,
 				15B326912BF89F6300965890 /* ContentUploadViewModel.swift in Sources */,
 				1516B9862BB81326006670CC /* SearchViewModel.swift in Sources */,
 				15E7FCD12BB5D92500768247 /* RatingView.swift in Sources */,
 				15D679892BE65D4A00E5C566 /* BrowserAPI.swift in Sources */,
+				157553C02BFF607F006BCEAD /* CreationHeaderView.swift in Sources */,
 				1516B98E2BB81DC5006670CC /* FavoriteView.swift in Sources */,
 				1521C0312B9F0C81009D8A43 /* StepWiseApp.swift in Sources */,
 				1516B9822BB80ECC006670CC /* BrowserView.swift in Sources */,
@@ -664,6 +683,7 @@
 				1514F4132BB2EC7A003B4E52 /* FavouriteListData.swift in Sources */,
 				1585FDBD2BA07AA500B80AE8 /* Post.swift in Sources */,
 				1514F4042BB2EB78003B4E52 /* StepData.swift in Sources */,
+				157553C92BFF64F5006BCEAD /* CreationMaterialEditView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
