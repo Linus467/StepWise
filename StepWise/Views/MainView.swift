@@ -31,7 +31,7 @@ struct MainView: View {
                 .tabItem {
                     Label("Favorite", systemImage: "star")
                 }
-            Account()
+            ContentMyTutorials(viewModel: CreationMyTutorialsViewModel(api: TutorialCreationAPI(), userId: uiState.user_id?.description ?? "", sessionKey: uiState.session_key?.description ?? ""))
                 .environmentObject(uiState)
                 .tabItem {
                     Label("Account", systemImage: "person")

@@ -9,15 +9,80 @@ import Foundation
 import Combine
 
 class CreationMenuViewModel: ObservableObject {
+    @Published var tutorial: Tutorial? = Tutorial()
+    
+    // Proxy variables for editing
+    @Published var title: String = ""
+    @Published var tutorialKind: String = ""
+    @Published var time: TimeInterval = 0
+    @Published var difficulty: Int = 0
+    @Published var completed: Bool = false
+    @Published var descriptionText: String = ""
+    @Published var previewPictureLink: URL?
+    @Published var previewType: String = ""
+    @Published var views: Int = 0
+    
+    @Published var isLoading = false
     private var api: TutorialCreationAPI = TutorialCreationAPI()
     private var cancellables = Set<AnyCancellable>()
     
     
     init(api: TutorialCreationAPI) {
         self.api = api
+        setupBindings()
     }
     init(){
-        
+        setupBindings()
+    }
+    private func setupBindings() {
+          $tutorial
+              .compactMap { $0 }
+              .sink { [weak self] tutorial in
+                  self?.title = tutorial.title ?? ""
+                  self?.tutorialKind = tutorial.tutorialKind ?? ""
+                  self?.time = tutorial.time ?? 0
+                  self?.difficulty = tutorial.difficulty ?? 0
+                  self?.completed = tutorial.completed ?? false
+                  self?.descriptionText = tutorial.descriptionText ?? ""
+                  self?.previewPictureLink = tutorial.previewPictureLink
+                  self?.previewType = tutorial.previewType ?? ""
+                  self?.views = tutorial.views ?? 0
+              }
+              .store(in: &cancellables)
+      }
+
+      func updateTutorial() {
+          if var updatedTutorial = tutorial {
+              updatedTutorial.title = title
+              updatedTutorial.tutorialKind = tutorialKind
+              updatedTutorial.time = time
+              updatedTutorial.difficulty = difficulty
+              updatedTutorial.completed = completed
+              updatedTutorial.descriptionText = descriptionText
+              updatedTutorial.previewPictureLink = previewPictureLink
+              updatedTutorial.previewType = previewType
+              updatedTutorial.views = views
+              
+              print("Tutorial Updated:", updatedTutorial)
+          }
+      }
+    func fetchTutorial(tutorialId: UUID, user_id: String, session_key: String) {
+        isLoading = true
+        api.getTutorial(tutorialId: tutorialId, userId: user_id, sessionKey: session_key)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                self?.isLoading = false
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print("Error fetching tutorial: \(error)")
+                }
+            }, receiveValue: { [weak self] tutorial in
+                self?.tutorial = tutorial
+                print("Tutorial: received: \(String(describing: self?.tutorial))")
+            })
+            .store(in: &cancellables)
     }
     func editTutorial(tutorialId: String, updates: [String: Any], user_id: String, session_key: String) {
         api.editTutorial(tutorialId: tutorialId, updates: updates, user_id: user_id, session_key: session_key)

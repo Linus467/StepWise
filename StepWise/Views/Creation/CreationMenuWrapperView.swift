@@ -18,7 +18,7 @@ struct CreationMenuWrapperView: View {
                 if viewModel.isLoading {
                     ProgressView("Loading...")
                 } else if let tutorial = viewModel.tutorial {
-                    CreationMenuView(tutorial: tutorial)
+                    CreationMenuView(tutorial: tutorial.id?.description ?? "")
                         .navigationBarTitle(tutorial.title ?? "No Title", displayMode: .inline)
                         .toolbar {
                             ToolbarItem(placement: .navigationBarTrailing) {

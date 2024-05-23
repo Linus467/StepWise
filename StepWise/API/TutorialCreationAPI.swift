@@ -133,11 +133,15 @@ class TutorialCreationAPI {
                .eraseToAnyPublisher()
        }
 
-   func addTutorial(parameters: [String: Any]) -> AnyPublisher<Bool, Error> {
+    func addTutorial(parameters: [String: Any], userId: String, sessionKey:String) -> AnyPublisher<Bool, Error> {
        let path = "AddTutorial"
        guard let body = try? JSONSerialization.data(withJSONObject: parameters) else {
            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
        }
+        let header : [String: String] = [
+            "user-id" : userId,
+            "session-key" : sessionKey
+        ]
        let request = createURLRequest(path: path, method: "POST", body: body)
 
        return URLSession.shared.dataTaskPublisher(for: request)

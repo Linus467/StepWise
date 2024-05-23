@@ -11,7 +11,6 @@ struct MenuView: View {
     var tutorial: Tutorial
     @State private var showMaterials = false
     @State private var showTools = false
-    @State private var isFavorite = false
     @State private var showSteps: Bool = false
     @EnvironmentObject var uiState: GlobalUIState
     
@@ -168,7 +167,7 @@ struct MenuView: View {
                                 .frame(width: 24, height: 24)
                         }
                         Button(action: viewModel.toggleFavorite) {
-                            Image(systemName: isFavorite ? "star.fill" : "star")
+                            Image(systemName: viewModel.isFavorite ? "star.fill" : "star")
                                 .resizable()
                                 .frame(width: 24, height: 24)
                         }

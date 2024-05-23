@@ -109,3 +109,39 @@ struct Material: Identifiable, Decodable, Hashable{
     var price: Double?
     var link : String?
 }
+extension Tutorial: CustomStringConvertible {
+    var description: String {
+        let userName = (user?.firstName ?? "Unknown User") + (user?.lastName ?? " d")
+        let tutorialTitle = title ?? "No Title"
+        let kind = tutorialKind ?? "Unknown Kind"
+        let totalTime = time != nil ? "\(time! / 3600) hours" : "Unknown Time"
+        let levelOfDifficulty = difficulty != nil ? "\(difficulty!)" : "Unknown Difficulty"
+        let isCompleted = completed != nil ? (completed! ? "Completed" : "Not Completed") : "Unknown Completion Status"
+        let description = descriptionText ?? "No Description"
+        let previewLink = previewPictureLink?.absoluteString ?? "No Preview Link"
+        let preview = previewType ?? "No Preview Type"
+        let totalViews = views != nil ? "\(views!)" : "No Views Count"
+        let totalSteps = steps != nil ? "\(steps!.count)" : "No Steps Count"
+        let totalTools = tools != nil ? "\(tools!.count)" : "No Tools Count"
+        let totalMaterials = materials != nil ? "\(materials!.count)" : "No Materials Count"
+        let totalRatings = ratings != nil ? "\(ratings!.count)" : "No Ratings Count"
+
+        return """
+        Tutorial:
+        - Title: \(tutorialTitle)
+        - Kind: \(kind)
+        - User: \(userName)
+        - Time: \(totalTime)
+        - Difficulty: \(levelOfDifficulty)
+        - Completed: \(isCompleted)
+        - Description: \(description)
+        - Preview Picture Link: \(previewLink)
+        - Preview Type: \(preview)
+        - Views: \(totalViews)
+        - Steps: \(totalSteps)
+        - Tools: \(totalTools)
+        - Materials: \(totalMaterials)
+        - Ratings: \(totalRatings)
+        """
+    }
+}

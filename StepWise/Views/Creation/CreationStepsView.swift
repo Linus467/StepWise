@@ -12,7 +12,7 @@ struct CreationStepsView: View {
     var steps: [Step]
     var stepsTitle = ""
     //tracking current step
-    @State private var currentStepIndex = 0
+    @State private var currentStepIndex : Int? = 0
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -23,7 +23,7 @@ struct CreationStepsView: View {
                     .font(.title)
                 #endif
                 //Progress bar
-                ProgressView(value: Double(currentStepIndex) / Double(steps.count-1))
+                ProgressView(value: Double(currentStepIndex ?? 0) / Double(steps.count-1))
                     .progressViewStyle(LinearProgressViewStyle())
                     .padding(.horizontal)
                 
@@ -53,6 +53,9 @@ struct CreationStepsView: View {
                                     .padding(.horizontal, -10)
                                     .padding(.leading, -5)
                                     .padding(.vertical, -15)
+                                
+                                EmptyView()
+                                    .padding(.vertical, 30)
                             }
                             .padding(.horizontal, 10)
                             .padding(.top, 10)
@@ -69,10 +72,18 @@ struct CreationStepsView: View {
                 
             }
             #if os(iOS)
-            .navigationBarTitle(steps[currentStepIndex].title ?? "No Title")
+            
+            .navigationBarTitle(steps[safe: currentStepIndex]?.title ?? "No Title")
+            
             #endif
             
         }
+    }
+}
+extension Collection {
+    subscript(safe index: Index?) -> Element? {
+        guard let index = index, indices.contains(index) else { return nil }
+        return self[index]
     }
 }
 

@@ -13,6 +13,8 @@ struct SubStepView: View {
         switch subStep.content {
         case .text(let textContent):
             Text(textContent.contentText)
+                .foregroundStyle(Color("Secoundary"))
+                .background(Color("Background"))
         case .picture(_):
             // Display a placeholder for picture content
             Image(systemName: "photo")
