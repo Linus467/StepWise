@@ -155,15 +155,25 @@ class TutorialCreationAPI {
         ]
        let request = createURLRequest(path: path, method: "POST", body: body)
 
-       return URLSession.shared.dataTaskPublisher(for: request)
-           .tryMap { output in
-               guard let httpResponse = output.response as? HTTPURLResponse,
-                     httpResponse.statusCode == 200 else {
-                   throw URLError(.badServerResponse)
-               }
-               return true
-           }
-           .eraseToAnyPublisher()
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { output in
+                guard let httpResponse = output.response as? HTTPURLResponse else {
+                    throw NetworkError.badResponse(statusCode: 0)
+                }
+                switch httpResponse.statusCode {
+                case 200:
+                    print("Add Tutorial Successful, HTTP Status Code: \(httpResponse.statusCode)")
+                    return true
+                case 400...499:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Client error: \(errorMessage)")
+                case 500...599:
+                    throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode)")
+                default:
+                    throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
+                }
+            }
+            .eraseToAnyPublisher()
    }
 
    func deleteTutorial(tutorialId: String, user_id: String, session_key: String) -> AnyPublisher<Bool, Error> {
