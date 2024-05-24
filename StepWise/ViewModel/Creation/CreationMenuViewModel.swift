@@ -70,6 +70,7 @@ class CreationMenuViewModel: ObservableObject {
               updatedTutorial.previewType = previewType
               updatedTutorial.views = views
               
+              
               print("Tutorial Updated:", updatedTutorial)
           }
       }
@@ -109,7 +110,7 @@ class CreationMenuViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     func addMaterial(material: Material, user_id: String, session_key: String, tutorial_id:UUID) {
-        api.addMaterial(parameters: ["title": material.title!, "amount": material.amount!, "link": material.link!], user_Id: user_id, session_key: session_key, tutorial_id: tutorial_id.description)
+        api.addMaterial(parameters: ["title": material.title!, "amount": material.amount!, "link": material.link!, "price" : material.price!], user_Id: user_id, session_key: session_key, tutorial_id: tutorial_id.description)
              .sink(receiveCompletion: { completion in
                  switch completion {
                  case .finished:
@@ -125,7 +126,7 @@ class CreationMenuViewModel: ObservableObject {
      
      // Delete material
      func deleteMaterial(materialId: UUID, user_id: String, session_key: String, tutorial_id:String) {
-         api.deleteMaterial(parameters: ["material_id": materialId], user_Id: user_id, session_key: session_key, tutorial_id: tutorial_id)
+         api.deleteMaterial(parameters: ["material-id": materialId.description], user_Id: user_id, session_key: session_key, tutorial_id: tutorial_id)
              .sink(receiveCompletion: { completion in
                  switch completion {
                  case .finished:
@@ -141,7 +142,7 @@ class CreationMenuViewModel: ObservableObject {
      
      // Add tool
      func addTool(tool: Tool, user_id: String, session_key: String, tutorial_id:String) {
-         api.addTool(parameters: ["title": tool.title, "amount": tool.amount, "link": tool.link], user_Id: user_id, session_key: session_key, tutorial_id: tutorial_id)
+         api.addTool(parameters: ["title": tool.title, "amount": tool.amount, "link": tool.link, "price": tool.price], user_Id: user_id, session_key: session_key, tutorial_id: tutorial_id)
              .sink(receiveCompletion: { completion in
                  switch completion {
                  case .finished:
@@ -157,7 +158,7 @@ class CreationMenuViewModel: ObservableObject {
      
      // Delete tool
      func deleteTool(toolId: UUID, user_id: String, session_key: String, tutorial_id:String) {
-         api.deleteTool(parameters: ["tool_id": toolId], user_Id: user_id, session_key: session_key, tutorial_id: tutorial_id)
+         api.deleteTool(parameters: ["tool-id": toolId.description], user_Id: user_id, session_key: session_key, tutorial_id: tutorial_id)
              .sink(receiveCompletion: { completion in
                  switch completion {
                  case .finished:

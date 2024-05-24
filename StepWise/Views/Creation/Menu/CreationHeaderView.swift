@@ -9,7 +9,9 @@ import SwiftUI
 
 struct CreationHeaderView: View {
     var tutorial: Tutorial?
+    @ObservedObject var viewModel : CreationMenuViewModel
     @Binding var newPreviewPictureLink: String
+    @EnvironmentObject private var uiState : GlobalUIState
     @State private var showingContentPicker = false
 
     var body: some View {
@@ -34,6 +36,7 @@ struct CreationHeaderView: View {
                 viewModel: ContentUploadViewModel(api: TutorialCreationAPI()),
                 onFileSelected: { selectedUrl in
                     newPreviewPictureLink = selectedUrl.absoluteString
+                    viewModel.editTutorial(tutorialId: tutorial?.id?.description ?? "", updates: ["preview_picture_link" : newPreviewPictureLink, "preview_type" : 1], user_id: uiState.user_id?.description ?? "", session_key: uiState.session_key?.description ?? "")
                 })
         }
     }

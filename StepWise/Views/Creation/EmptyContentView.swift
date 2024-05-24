@@ -14,6 +14,9 @@ struct EmptyContentView: View {
     @State private var showContentButton = true
     var tutorialId : String
     var stepId: String
+    @FocusState private var isTextFieldFocused: Bool
+
+
 
     var body: some View {
         HStack {
@@ -31,6 +34,7 @@ struct EmptyContentView: View {
                     TextField("Enter some text here...", text: $viewModel.inputText, axis: .vertical)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
+                        .focused($isTextFieldFocused)
                 }
             }
             

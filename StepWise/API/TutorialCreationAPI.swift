@@ -69,11 +69,22 @@ class TutorialCreationAPI {
 
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
+                guard let httpResponse = output.response as? HTTPURLResponse else {
+                    throw NetworkError.badResponse(statusCode: 0)
                 }
-                return true
+                switch httpResponse.statusCode {
+                case 200:
+                    print("Add Tool Successful, HTTP Status Code: \(httpResponse.statusCode)")
+                    return true
+                case 400...499:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Client error: \(errorMessage)")
+                case 500...599:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode)")
+                default:
+                    throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
+                }
             }
             .eraseToAnyPublisher()
     }
@@ -167,11 +178,21 @@ class TutorialCreationAPI {
 
        return URLSession.shared.dataTaskPublisher(for: request)
            .tryMap { output in
-               guard let httpResponse = output.response as? HTTPURLResponse,
-                     httpResponse.statusCode == 200 else {
-                   throw URLError(.badServerResponse)
+               guard let httpResponse = output.response as? HTTPURLResponse else {
+                   throw NetworkError.badResponse(statusCode: 0)
                }
-               return true
+               switch httpResponse.statusCode {
+               case 200:
+                   print("Add Tool Successful, HTTP Status Code: \(httpResponse.statusCode)")
+                   return true
+               case 400...499:
+                   let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                   throw NetworkError.serverError(description: "Client error: \(errorMessage)")
+               case 500...599:
+                   throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode)")
+               default:
+                   throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
+               }
            }
            .eraseToAnyPublisher()
    }
@@ -190,13 +211,25 @@ class TutorialCreationAPI {
 
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
+                guard let httpResponse = output.response as? HTTPURLResponse else {
+                    throw NetworkError.badResponse(statusCode: 0)
                 }
-                return true
+                switch httpResponse.statusCode {
+                case 200:
+                    print("Add Tool Successful, HTTP Status Code: \(httpResponse.statusCode)")
+                    return true
+                case 400...499:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Client error: \(errorMessage)")
+                case 500...599:
+                    throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode)")
+                default:
+                    throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
+                }
             }
             .eraseToAnyPublisher()
+    
+
     }
 
     func deleteMaterial(parameters: [String: Any], user_Id: String, session_key: String, tutorial_id: String) -> AnyPublisher<Bool, Error> {
@@ -215,38 +248,60 @@ class TutorialCreationAPI {
 
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
+                guard let httpResponse = output.response as? HTTPURLResponse else {
+                    throw NetworkError.badResponse(statusCode: 0)
                 }
-                return true
+                switch httpResponse.statusCode {
+                case 200:
+                    print("Add Tool Successful, HTTP Status Code: \(httpResponse.statusCode)")
+                    return true
+                case 400...499:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Client error: \(errorMessage)")
+                case 500...599:
+                    throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode)")
+                default:
+                    throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
+                }
             }
             .eraseToAnyPublisher()
+    
+
     }
 
-    // Tool Methods
     func addTool(parameters: [String: Any], user_Id: String, session_key: String, tutorial_id: String) -> AnyPublisher<Bool, Error> {
         let path = "AddTool"
-        let headers : [String:String] = [
-            "user-id":user_Id,
+        let headers: [String: String] = [
+            "user-id": user_Id,
             "session-key": session_key,
             "tutorial-id": tutorial_id
         ]
         guard let body = try? JSONSerialization.data(withJSONObject: parameters) else {
-            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+            return Fail(error: NetworkError.badURL).eraseToAnyPublisher()
         }
-        let request = createURLRequest(path: path, method: "POST",headers:headers, body: body)
+        let request = createURLRequest(path: path, method: "POST", headers: headers, body: body)
 
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
+                guard let httpResponse = output.response as? HTTPURLResponse else {
+                    throw NetworkError.badResponse(statusCode: 0)
                 }
-                return true
+                switch httpResponse.statusCode {
+                case 200:
+                    print("Add Tool Successful, HTTP Status Code: \(httpResponse.statusCode)")
+                    return true
+                case 400...499:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Client error: \(errorMessage)")
+                case 500...599:
+                    throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode)")
+                default:
+                    throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
+                }
             }
             .eraseToAnyPublisher()
     }
+
 
     func deleteTool(parameters: [String: Any], user_Id: String, session_key: String, tutorial_id: String) -> AnyPublisher<Bool, Error> {
         let path = "DeleteTool"
@@ -262,11 +317,21 @@ class TutorialCreationAPI {
 
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
+                guard let httpResponse = output.response as? HTTPURLResponse else {
+                    throw NetworkError.badResponse(statusCode: 0)
                 }
-                return true
+                switch httpResponse.statusCode {
+                case 200:
+                    print("Add Tool Successful, HTTP Status Code: \(httpResponse.statusCode)")
+                    return true
+                case 400...499:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Client error: \(errorMessage)")
+                case 500...599:
+                    throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode)")
+                default:
+                    throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
+                }
             }
             .eraseToAnyPublisher()
     }
@@ -442,8 +507,8 @@ class TutorialCreationAPI {
     func editMaterial(tutorialId: String, material: Material, userId: String, sessionKey: String) -> AnyPublisher<Bool, Error> {
         let path = "EditMaterial"
         let parameters: [String: Any] = [
-            "tutorial_id": tutorialId,
-            "material_id": material.id!,
+            "tutorial-id": tutorialId,
+            "material-id": material.id?.description ?? "",
             "title": material.title!,
             "amount": material.amount!,
             "price": material.price!,
@@ -451,7 +516,8 @@ class TutorialCreationAPI {
         ]
         let headers: [String: String] = [
             "user-id": userId,
-            "session-key": sessionKey
+            "session-key": sessionKey,
+            "tutorial-id" : tutorialId
         ]
         guard let body = try? JSONSerialization.data(withJSONObject: parameters) else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
@@ -460,20 +526,32 @@ class TutorialCreationAPI {
         
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
+                guard let httpResponse = output.response as? HTTPURLResponse else {
+                    throw NetworkError.badResponse(statusCode: 0)
                 }
-                return true
+                switch httpResponse.statusCode {
+                case 200:
+                    print("Edited Material Successful, HTTP Status Code: \(httpResponse.statusCode)")
+                    return true
+                case 400...499:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Client error: \(errorMessage)")
+                case 500...599:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode) \(errorMessage)")
+                default:
+                    throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
+                }
             }
             .eraseToAnyPublisher()
+    
     }
 
     func editTool(tutorialId: String, tool: Tool, userId: String, sessionKey: String) -> AnyPublisher<Bool, Error> {
         let path = "EditTool"
         let parameters: [String: Any] = [
-            "tutorial_id": tutorialId,
-            "tool_id": tool.id,
+            "tutorial-id": tutorialId,
+            "tool-id": tool.id.description,
             "title": tool.title,
             "amount": tool.amount,
             "price": tool.price,
@@ -481,7 +559,8 @@ class TutorialCreationAPI {
         ]
         let headers: [String: String] = [
             "user-id": userId,
-            "session-key": sessionKey
+            "session-key": sessionKey,
+            "tutorial-id" : tutorialId
         ]
         guard let body = try? JSONSerialization.data(withJSONObject: parameters) else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
@@ -490,15 +569,30 @@ class TutorialCreationAPI {
 
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
+                guard let httpResponse = output.response as? HTTPURLResponse else {
+                    throw NetworkError.badResponse(statusCode: 0)
                 }
-                return true
+                switch httpResponse.statusCode {
+                case 200:
+                    print("Add Tool Successful, HTTP Status Code: \(httpResponse.statusCode)")
+                    return true
+                case 400...499:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Client error: \(errorMessage)")
+                case 500...599:
+                    throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode)")
+                default:
+                    throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
+                }
             }
             .eraseToAnyPublisher()
     
 
     }
 
+}
+enum NetworkError: Error {
+    case badURL
+    case badResponse(statusCode: Int)
+    case serverError(description: String)
 }

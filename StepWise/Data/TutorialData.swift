@@ -35,6 +35,7 @@ struct Step: Identifiable, Decodable, Hashable {
 struct SubStep: Identifiable, Decodable, Hashable {
     var id: UUID?
     var type: Int?
+    var height: Int?
     var content: Content?
 }
 

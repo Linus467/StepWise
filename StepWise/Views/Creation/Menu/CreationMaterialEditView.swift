@@ -10,6 +10,8 @@ import SwiftUI
 struct CreationMaterialEditView: View {
     var material: Material
     @ObservedObject var viewModel: CreationMenuViewModel
+    @EnvironmentObject private var uiState: GlobalUIState
+    @Environment(\.presentationMode) var presentationMode
     var tutorialId: UUID
     @State private var title: String
     @State private var amount: String
@@ -20,22 +22,58 @@ struct CreationMaterialEditView: View {
         self.material = material
         self.viewModel = viewModel
         self.tutorialId = tutorialId
-        _title = State(initialValue: material.title!)
-        _amount = State(initialValue: String(describing: material.amount))
-        _price = State(initialValue: String(describing: material.price))
-        _link = State(initialValue: material.link!)
+        _title = State(initialValue: material.title ?? "")
+        _amount = State(initialValue: "\(material.amount)")
+        _price = State(initialValue: "\(material.price)")
+        _link = State(initialValue: material.link ?? "")
+        if material.title == "DONOTWRITETHIS"{
+            presentationMode.wrappedValue.dismiss()
+        }
     }
 
     var body: some View {
-        Form {
-            TextField("Title", text: $title)
-            TextField("Amount", text: $amount)
-            TextField("Price", text: $price)
-            TextField("Link", text: $link)
-            Button("Save Changes") {
-                let updatedMaterial = Material(title: title, amount: Int(amount) ?? material.amount, price: Double(price) ?? material.price, link: link)
-                viewModel.editMaterial(tutorialId: tutorialId.uuidString, material: updatedMaterial, userId: "userID", sessionKey: "sessionKey")
+        NavigationView {
+            Form {
+                Section(header: Text("Material Details").font(.headline).foregroundColor(.blue)) {
+                    textFieldWithLabel(label: "Title", text: $title)
+                    textFieldWithLabel(label: "Amount", text: $amount, keyboardType: .numberPad)
+                    textFieldWithLabel(label: "Price ($)", text: $price, keyboardType: .decimalPad)
+                    textFieldWithLabel(label: "Link", text: $link)
+                }
+
+                Section {
+                    Button("Save Changes", action: saveChanges)
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                }
+            }
+            .navigationTitle("Edit Material")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        saveChanges()
+                    }
+                }
             }
         }
+    }
+
+    private func textFieldWithLabel(label: String, text: Binding<String>, keyboardType: UIKeyboardType = .default) -> some View {
+        HStack {
+            Text(label)
+                .foregroundStyle(.secondary)
+            Spacer()
+            TextField("Enter \(label.lowercased())", text: text)
+                .keyboardType(keyboardType)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+        }
+    }
+
+    private func saveChanges() {
+        let updatedMaterial = Material(id: material.id, title: title, amount: Int(amount) ?? material.amount, price: Double(price) ?? material.price, link: link)
+        viewModel.editMaterial(tutorialId: tutorialId.uuidString, material: updatedMaterial, userId: uiState.user_id?.description ?? "", sessionKey: uiState.session_key?.description ?? "")
+        presentationMode.wrappedValue.dismiss()
     }
 }
