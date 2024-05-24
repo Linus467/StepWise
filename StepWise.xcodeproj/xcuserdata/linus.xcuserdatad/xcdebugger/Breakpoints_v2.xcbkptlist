@@ -768,7 +768,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "551"
             endingLineNumber = "551"
-            landmarkName = "editTool(tutorialId:tool:userId:sessionKey:)"
+            landmarkName = "editMaterial(tutorialId:material:userId:sessionKey:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

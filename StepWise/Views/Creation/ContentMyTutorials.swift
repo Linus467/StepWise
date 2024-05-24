@@ -105,7 +105,8 @@ struct AddTutorialView: View {
                         "time": time,
                         "difficulty": difficulty,
                         "description": description,
-                        "user_id": viewModel.userId
+                        "user_id": viewModel.userId,
+                        
                     ]
                     viewModel.addTutorial(parameters: parameters)
                     isPresented = false
