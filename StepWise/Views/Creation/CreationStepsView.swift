@@ -12,17 +12,21 @@ struct CreationStepsView: View {
     @State private var steps: [Step]
     var stepsTitle = ""
     
+    @EnvironmentObject private var uiState : GlobalUIState
+    @StateObject var viewModel: CreationMenuViewModel
+    
     //tracking current step
     @State private var currentStepIndex : Int? = 0
     @Environment(\.presentationMode) var presentationMode
     
-    init(tutorialId: String, steps: [Step]){
+    init(tutorialId: String, steps: [Step], viewModel : CreationMenuViewModel){
         self.tutorialId = tutorialId
         self._steps = State(initialValue: steps.map { step in
             var modifiedStep = step
             modifiedStep.subStepList = modifiedStep.subStepList?.sorted(by: {$0.height ?? -1 > $1.height ?? -1})
             return modifiedStep
         })
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
@@ -76,6 +80,9 @@ struct CreationStepsView: View {
                             Spacer()
                         }
                     }
+                }
+                .refreshable {
+                    viewModel.fetchTutorial(tutorialId: UUID(uuidString: tutorialId) ?? UUID(), user_id: uiState.user_id?.description ?? "", session_key: uiState.session_key?.description ?? "")
                 }
                 #if os(iOS)
                 //activates Swipe gesture

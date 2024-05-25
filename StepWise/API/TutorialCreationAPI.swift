@@ -153,7 +153,7 @@ class TutorialCreationAPI {
             "user-id" : userId,
             "session-key" : sessionKey
         ]
-       let request = createURLRequest(path: path, method: "POST", body: body)
+        let request = createURLRequest(path: path, method: "POST", headers: header, body: body)
 
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
@@ -168,7 +168,8 @@ class TutorialCreationAPI {
                     let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
                     throw NetworkError.serverError(description: "Client error: \(errorMessage)")
                 case 500...599:
-                    throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode)")
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Server error with status: \(errorMessage)")
                 default:
                     throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
                 }
@@ -389,23 +390,89 @@ class TutorialCreationAPI {
         
         task.resume()
     }
-    func uploadPicture(assetURL: URL,user_id: String, session_key: String, completion: @escaping (Result<String, Error>) -> Void) {
-        // First, resolve the PHAsset from the assetURL
-        let fetchResult = PHAsset.fetchAssets(withALAssetURLs: [assetURL], options: nil)
+    
+    #if os(iOS)
+    func uploadPicture(fileURL: URL, user_id: String, session_key: String, completion: @escaping (Result<String, Error>) -> Void) {
+        // Fetch assets of specific media types (images and videos)
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.predicate = NSPredicate(format: "mediaType = %d OR mediaType = %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
+
+        let fetchResult = PHAsset.fetchAssets(with: fetchOptions)
         guard let asset = fetchResult.firstObject else {
-            completion(.failure(NSError(domain: "UploadError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No asset found for URL"])))
+            completion(.failure(NSError(domain: "UploadError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No asset found"])))
             return
         }
-        
-        // Now request the image data for the asset
-        PHImageManager.default().requestImageData(for: asset, options: nil) { imageData, dataUTI, orientation, info in
+
+        // Request the image data and orientation
+        PHImageManager.default().requestImageDataAndOrientation(for: asset, options: nil) { imageData, dataUTI, orientation, info in
             guard let data = imageData else {
                 completion(.failure(NSError(domain: "UploadError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not retrieve image data"])))
                 return
             }
-            
+
             // Prepare to upload the image data
             let url = URL(string: "\(self.baseURL)PictureUpload")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+
+            let boundary = "Boundary-\(UUID().uuidString)"
+            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+            request.setValue(user_id, forHTTPHeaderField: "user-id")
+            request.setValue(session_key, forHTTPHeaderField: "session-key")
+
+            var body = Data()
+            let filename = "filename.jpg"
+            let mimeType = "image/jpeg"
+
+            body.append("--\(boundary)\r\n".data(using: .utf8)!)
+            body.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+            body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+            body.append(data)
+            body.append("\r\n".data(using: .utf8)!)
+            body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+
+            let task = URLSession.shared.uploadTask(with: request, from: body) { data, response, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+
+                guard let data = data else {
+                    completion(.failure(NSError(domain: "InvalidResponse", code: 2, userInfo: [NSLocalizedDescriptionKey: "No data received from server"])))
+                    return
+                }
+
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                        if let path = json["Path"] as? String {
+                            completion(.success(path))
+                        } else {
+                            print("Error: 'Path' key not found in JSON: \(json)")
+                            completion(.failure(NSError(domain: "InvalidResponse", code: 2, userInfo: [NSLocalizedDescriptionKey: "Invalid or no response from server"])))
+                        }
+                    } else {
+                        print("Error: JSON is not a dictionary: \(String(data: data, encoding: .utf8) ?? "nil")")
+                        completion(.failure(NSError(domain: "InvalidResponse", code: 2, userInfo: [NSLocalizedDescriptionKey: "Invalid or no response from server"])))
+                    }
+                } catch {
+                    print("Error: Unable to parse JSON: \(error.localizedDescription). Response data: \(String(data: data, encoding: .utf8) ?? "nil")")
+                    completion(.failure(NSError(domain: "InvalidResponse", code: 2, userInfo: [NSLocalizedDescriptionKey: "Invalid or no response from server"])))
+                }
+            }
+
+            task.resume()
+        }
+    }
+    #endif
+
+    #if os(macOS)
+    func uploadPicture(assetURL: URL, user_id: String, session_key: String, completion: @escaping (Result<String, Error>) -> Void) {
+        // Attempt to load image data directly from the URL
+        do {
+            let data = try Data(contentsOf: assetURL)
+            
+            // Prepare to upload the image data
+            let url = URL(string: "https://example.com/PictureUpload")!  // Replace with your actual base URL
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
 
@@ -443,12 +510,15 @@ class TutorialCreationAPI {
             }
             
             task.resume()
+        } catch {
+            completion(.failure(error))
         }
     }
+    #endif
     func editTutorial(tutorialId: String, updates: [String: Any], user_id: String, session_key: String) -> AnyPublisher<Bool, Error> {
         let path = "EditTutorial"
         
-        var headers: [String: String] = [
+        let headers: [String: String] = [
             "user-id": user_id,
             "session-key": session_key,
             "tutorial-id" : tutorialId
@@ -463,11 +533,22 @@ class TutorialCreationAPI {
         
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
+                guard let httpResponse = output.response as? HTTPURLResponse else {
+                    throw NetworkError.badResponse(statusCode: 0)
                 }
-                return true
+                switch httpResponse.statusCode {
+                case 200:
+                    print("Edited Tutorial Successful, HTTP Status Code: \(httpResponse.statusCode)")
+                    return true
+                case 400...499:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Client error: \(errorMessage)")
+                case 500...599:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
+                    throw NetworkError.serverError(description: "Server error with status: \(httpResponse.statusCode) \(errorMessage)")
+                default:
+                    throw NetworkError.badResponse(statusCode: httpResponse.statusCode)
+                }
             }
             .eraseToAnyPublisher()
     }

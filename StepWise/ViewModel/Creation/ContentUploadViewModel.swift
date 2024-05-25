@@ -47,7 +47,7 @@ class ContentUploadViewModel: ObservableObject {
     func uploadImage(fileURL: URL,user_id: String, session_key:String, completion: @escaping (Result<URL, Error>) -> Void) {
         isUploading = true
         
-        api.uploadPicture(assetURL: fileURL,
+        api.uploadPicture(fileURL: fileURL,
                           user_id: user_id,
                           session_key: session_key
         ) { [weak self] result in

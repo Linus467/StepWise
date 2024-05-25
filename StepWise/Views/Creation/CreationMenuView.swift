@@ -33,7 +33,7 @@ struct CreationMenuView: View {
                     CreationHeaderView(tutorial: viewModel.tutorial, viewModel: viewModel, newPreviewPictureLink: $newPreviewPictureLink)
                 }
                 Section(header: Text("Steps")) {
-                    NavigationLink("View Steps", destination: CreationStepsView(tutorialId: viewModel.tutorial?.id?.description ?? "", steps: viewModel.tutorial?.steps ?? []), isActive: $showingStepsView)
+                    NavigationLink("View Steps", destination: CreationStepsView(tutorialId: viewModel.tutorial?.id?.description ?? "", steps: viewModel.tutorial?.steps ?? [], viewModel: viewModel), isActive: $showingStepsView)
                         .refreshable {
                             
                         }
@@ -51,7 +51,9 @@ struct CreationMenuView: View {
                 }
                 
             }
-            .listStyle(GroupedListStyle())
+            #if os(iOS)
+                .listStyle(GroupedListStyle())
+            #endif
         }
         .sheet(isPresented: $showingMaterialEdit, content: {
             if let material = selectedMaterial {

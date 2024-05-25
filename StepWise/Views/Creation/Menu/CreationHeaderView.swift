@@ -36,7 +36,7 @@ struct CreationHeaderView: View {
                 viewModel: ContentUploadViewModel(api: TutorialCreationAPI()),
                 onFileSelected: { selectedUrl in
                     newPreviewPictureLink = selectedUrl.absoluteString
-                    viewModel.editTutorial(tutorialId: tutorial?.id?.description ?? "", updates: ["preview_picture_link" : newPreviewPictureLink, "preview_type" : 1], user_id: uiState.user_id?.description ?? "", session_key: uiState.session_key?.description ?? "")
+                    viewModel.editTutorial(tutorialId: tutorial?.id?.description ?? "", updates: ["preview-picture-link" : newPreviewPictureLink, "preview-type" : "Image"], user_id: uiState.user_id?.description ?? "", session_key: uiState.session_key?.description ?? "")
                 })
         }
     }

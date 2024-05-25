@@ -100,7 +100,7 @@ class CreationMenuViewModel: ObservableObject {
                     // Handle completion
                     break
                 case .failure(let error):
-                    // Handle error, could update UI or log
+                    
                     print("Error updating tutorial: \(error)")
                 }
             }, receiveValue: { success in

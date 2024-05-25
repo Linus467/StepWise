@@ -51,8 +51,10 @@ struct CreationToolEditView: View {
                                 .foregroundStyle(.secondary)
                             Spacer()
                             TextField("0", text: $amount)
+                            #if os(iOS)
                                 .keyboardType(.numberPad)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                            #endif
                         }
                         
                         HStack {
@@ -60,7 +62,9 @@ struct CreationToolEditView: View {
                                 .foregroundColor(.secondary)
                             Spacer()
                             TextField("0.00", text: $price)
+                            #if os(iOS)
                                 .keyboardType(.decimalPad)
+                            #endif
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
                         HStack{
@@ -84,10 +88,12 @@ struct CreationToolEditView: View {
                     .controlSize(.large)
                 }
             }
+            #if os(iOS)
             .navigationTitle("Edit Tool")
             .navigationBarItems(trailing: Button("Done") {
                 saveChanges()
             })
+            #endif
         }
     }
 

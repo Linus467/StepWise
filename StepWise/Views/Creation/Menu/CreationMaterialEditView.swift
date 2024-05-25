@@ -36,8 +36,15 @@ struct CreationMaterialEditView: View {
             Form {
                 Section(header: Text("Material Details").font(.headline).foregroundColor(.blue)) {
                     textFieldWithLabel(label: "Title", text: $title)
+                    #if os(macOS)
+                    
+                    textFieldWithLabel(label: "Amount", text: $amount)
+                    textFieldWithLabel(label: "Price ($)", text: $price)
+                    #endif
+                    #if os(iOS)
                     textFieldWithLabel(label: "Amount", text: $amount, keyboardType: .numberPad)
                     textFieldWithLabel(label: "Price ($)", text: $price, keyboardType: .decimalPad)
+                    #endif
                     textFieldWithLabel(label: "Link", text: $link)
                 }
 
@@ -51,25 +58,44 @@ struct CreationMaterialEditView: View {
             }
             .navigationTitle("Edit Material")
             .toolbar {
+                #if os(iOS)
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
                         saveChanges()
                     }
                 }
+                #endif
             }
         }
     }
-
+    #if os(iOS)
     private func textFieldWithLabel(label: String, text: Binding<String>, keyboardType: UIKeyboardType = .default) -> some View {
-        HStack {
-            Text(label)
-                .foregroundStyle(.secondary)
-            Spacer()
-            TextField("Enter \(label.lowercased())", text: text)
-                .keyboardType(keyboardType)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-        }
-    }
+           HStack {
+               Text(label)
+                   .foregroundStyle(.secondary)
+               Spacer()
+               TextField("Enter \(label.lowercased())", text: text)
+                   .textFieldStyle(RoundedBorderTextFieldStyle())
+                   #if os(iOS)
+                   .keyboardType(keyboardType)
+                   #endif
+           }
+       }
+    #endif
+    #if os(macOS)
+    private func textFieldWithLabel(label: String, text: Binding<String>) -> some View {
+           HStack {
+               Text(label)
+                   .foregroundStyle(.secondary)
+               Spacer()
+               TextField("Enter \(label.lowercased())", text: text)
+                   .textFieldStyle(RoundedBorderTextFieldStyle())
+                   #if os(iOS)
+                   .keyboardType(keyboardType)
+                   #endif
+           }
+       }
+    #endif
 
     private func saveChanges() {
         let updatedMaterial = Material(id: material.id, title: title, amount: Int(amount) ?? material.amount, price: Double(price) ?? material.price, link: link)

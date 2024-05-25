@@ -26,7 +26,9 @@ struct CreationDetailView: View {
                         .foregroundColor(.secondary)
                     Spacer()
                     TextField("Hours", value: $viewModel.time, formatter: NumberFormatter())
+                        #if os(iOS)
                         .keyboardType(.decimalPad)
+                    #endif
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
 
@@ -35,7 +37,9 @@ struct CreationDetailView: View {
                         .foregroundColor(.secondary)
                     Spacer()
                     TextField("Difficulty Level", value: $viewModel.difficulty, formatter: NumberFormatter())
+                        #if os(iOS)
                         .keyboardType(.numberPad)
+                    #endif
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
 
@@ -66,7 +70,6 @@ struct CreationDetailView: View {
             }
         }
         .formStyle(GroupedFormStyle())
-        .navigationTitle("Edit Tutorial Details")
         
     }
 }

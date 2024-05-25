@@ -42,7 +42,9 @@ struct ContentMyTutorials: View {
                 }
             }
             .navigationTitle("My Tutorials")
+            #if os(iOS)
             .navigationBarItems(trailing: addButton)
+            #endif
             .onAppear {
                 // Ensure tutorials are loaded when the view appears
                 viewModel.getMyTutorials()
@@ -94,7 +96,9 @@ struct AddTutorialView: View {
                 TextField("Title", text: $title)
                 TextField("Kind", text: $kind)
                 TextField("Time (mins)", text: $time)
+                #if os(iOS)
                     .keyboardType(.numberPad)
+                #endif
                 TextField("Difficulty", text: $difficulty)
                 TextField("Description", text: $description)
 
@@ -112,10 +116,12 @@ struct AddTutorialView: View {
                     isPresented = false
                 }
             }
+            #if os(iOS)
             .navigationBarTitle("New Tutorial", displayMode: .inline)
             .navigationBarItems(leading: Button("Cancel") {
                 isPresented = false
             })
+            #endif
         }
     }
 }

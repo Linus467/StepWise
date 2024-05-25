@@ -47,7 +47,7 @@ struct MenuView: View {
                         Spacer()
                         
                         Button(action: viewModel.toggleFavorite) {
-                            Image(systemName: isFavorite ? "star.fill" : "star")
+                            Image(systemName: viewModel.isFavorite ? "star.fill" : "star")
                                 .resizable()
                                 .frame(width: 24, height: 24)
                         }

@@ -17,7 +17,7 @@ struct PreviewView: View {
                     image
                         .resizable()
                         .aspectRatio(16/10, contentMode: .fit)
-                        .scaledToFit()
+                        .scaledToFill()
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 200)
                         .background(Color.gray)
                         .cornerRadius(8)
