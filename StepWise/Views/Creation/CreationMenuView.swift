@@ -18,6 +18,7 @@ struct CreationMenuView: View {
     
     @State private var showingMaterialEdit = false
     @State private var showingToolEdit = false
+    @State private var selectedTutorial : Tutorial?
     @State private var selectedMaterial: Material? = Material(id: UUID(), title: "DONOTWRITETHIS", amount: Int(1.0), price: 0.0, link: "")
     @State private var selectedTool: Tool? = Tool(id: UUID(), title: "DONOTWRITETHIS", amount: Int(1.0), link: "", price: 0.0)
     
@@ -33,10 +34,14 @@ struct CreationMenuView: View {
                     CreationHeaderView(tutorial: viewModel.tutorial, viewModel: viewModel, newPreviewPictureLink: $newPreviewPictureLink)
                 }
                 Section(header: Text("Steps")) {
-                    NavigationLink("View Steps", destination: CreationStepsView(tutorialId: viewModel.tutorial?.id?.description ?? "", steps: viewModel.tutorial?.steps ?? [], viewModel: viewModel), isActive: $showingStepsView)
-                        .refreshable {
-                            
-                        }
+                    Button("View steps"){
+                        self.selectedTutorial = viewModel.tutorial
+                        self.showingStepsView = true
+                    }
+                    .refreshable {
+                        viewModel.fetchTutorial(tutorialId: viewModel.tutorial?.id ?? UUID(), user_id: uiState.user_id?.description ?? "", session_key: uiState.session_key?.description ?? "")
+                    }
+                        
                 }
                 CreationDetailView(viewModel: viewModel, tutorial: viewModel.tutorial)
                     .scaledToFit()
@@ -70,6 +75,11 @@ struct CreationMenuView: View {
                 CreationDetailView(viewModel: viewModel, tutorial: viewModel.tutorial)
             }
         })
+        .navigationDestination(isPresented: $showingStepsView) {
+            if let tutorial = selectedTutorial {
+                CreationStepsView(tutorialId: tutorial.id?.description ?? "", steps: tutorial.steps ?? [], viewModel: viewModel)
+            }
+        }
         .refreshable {
             viewModel.fetchTutorial(tutorialId: viewModel.tutorial?.id ?? UUID(), user_id: uiState.user_id?.uuidString ?? "", session_key: uiState.user_id?.uuidString ?? "")
         }

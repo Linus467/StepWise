@@ -11,6 +11,8 @@ import AVKit
 struct CreationSubStepView: View {
     @EnvironmentObject var uiState: GlobalUIState
     @ObservedObject var viewModel: CreationSubStepViewModel = CreationSubStepViewModel(api: TutorialCreationAPI())
+    
+    @StateObject var viewModelMenu: CreationMenuViewModel
     var subStep: SubStep
     var stepId: String
     var tutorialId: String
@@ -61,6 +63,7 @@ struct CreationSubStepView: View {
             if let contentId = subStep.id {
                 Button(action:{
                     viewModel.deleteContent(tutorialId: tutorialId, stepId: stepId, contentId: contentId.uuidString, user_id: uiState.user_id?.description ?? "", session_key: uiState.session_key?.description ?? "")
+                    viewModelMenu.fetchTutorial(tutorialId: UUID(uuidString: tutorialId) ?? UUID(), user_id: uiState.user_id?.description ?? "", session_key: uiState.session_key?.description ?? "")
                 }){
                     Image(systemName: "trash.circle")
                         .resizable()
@@ -75,6 +78,6 @@ struct CreationSubStepView: View {
 }
 
 #Preview{
-    CreationSubStepView(viewModel: CreationSubStepViewModel(api: TutorialCreationAPI()), subStep: SubStep(), stepId: "323e4567-e89b-12d3-a456-426614174008", tutorialId: "123e4567-e89b-12d3-a456-426614174002")
+    CreationSubStepView(viewModel: CreationSubStepViewModel(api: TutorialCreationAPI()), viewModelMenu: CreationMenuViewModel(), subStep: SubStep(), stepId: "323e4567-e89b-12d3-a456-426614174008", tutorialId: "123e4567-e89b-12d3-a456-426614174002")
         .environmentObject(GlobalUIState())
 }

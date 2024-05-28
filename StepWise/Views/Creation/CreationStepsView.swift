@@ -51,7 +51,7 @@ struct CreationStepsView: View {
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(steps[index].subStepList!) { subStep in
                                     CreationSubStepView(
-                                        subStep: subStep,
+                                        viewModelMenu: viewModel, subStep: subStep,
                                         stepId: steps[index].id?.uuidString ?? "",
                                         tutorialId: tutorialId)
                                     #if os(macOS)

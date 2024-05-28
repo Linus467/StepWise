@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import Photos
+import MobileCoreServices
 
 class TutorialCreationAPI {
     private var cancellables = Set<AnyCancellable>()
@@ -405,7 +406,7 @@ class TutorialCreationAPI {
 
         // Request the image data and orientation
         PHImageManager.default().requestImageDataAndOrientation(for: asset, options: nil) { imageData, dataUTI, orientation, info in
-            guard let data = imageData else {
+            guard let data = imageData, let uti = dataUTI else {
                 completion(.failure(NSError(domain: "UploadError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not retrieve image data"])))
                 return
             }
@@ -421,8 +422,9 @@ class TutorialCreationAPI {
             request.setValue(session_key, forHTTPHeaderField: "session-key")
 
             var body = Data()
-            let filename = "filename.jpg"
-            let mimeType = "image/jpeg"
+            let filename = "(\(UUID().description).jpg"
+            let mimeType = uti.mimeType()
+            let fileExtension = uti.fileExtensionFromUTI()
 
             body.append("--\(boundary)\r\n".data(using: .utf8)!)
             body.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
@@ -538,6 +540,7 @@ class TutorialCreationAPI {
                 }
                 switch httpResponse.statusCode {
                 case 200:
+                    let errorMessage = String(data: output.data, encoding: .utf8) ?? "Unknown error"
                     print("Edited Tutorial Successful, HTTP Status Code: \(httpResponse.statusCode)")
                     return true
                 case 400...499:
@@ -686,4 +689,22 @@ enum NetworkError: Error {
     case badURL
     case badResponse(statusCode: Int)
     case serverError(description: String)
+}
+
+extension String {
+    func mimeType() -> String {
+        if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, self as CFString, nil)?.takeRetainedValue() {
+            if let mimeType = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)?.takeRetainedValue() {
+                return mimeType as String
+            }
+        }
+        return "application/octet-stream" // Default type if not found
+    }
+
+    func fileExtensionFromUTI() -> String {
+        guard let fileExtension = UTTypeCopyPreferredTagWithClass(self as CFString, kUTTagClassFilenameExtension)?.takeRetainedValue() else {
+            return "unknown"
+        }
+        return fileExtension as String
+    }
 }
