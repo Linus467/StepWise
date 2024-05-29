@@ -90,6 +90,7 @@
 		15E7FCCF2BB5D62300768247 /* MaterialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7FCCE2BB5D62300768247 /* MaterialView.swift */; };
 		15E7FCD12BB5D92500768247 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7FCD02BB5D92500768247 /* RatingView.swift */; };
 		15E7FCD32BB5E1B000768247 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E7FCD22BB5E1B000768247 /* MenuViewModel.swift */; };
+		2853BDE52C01DBDC008F0391 /* ExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2853BDE42C01DBDC008F0391 /* ExplanationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,6 +199,7 @@
 		15E7FCCE2BB5D62300768247 /* MaterialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialView.swift; sourceTree = "<group>"; };
 		15E7FCD02BB5D92500768247 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		15E7FCD22BB5E1B000768247 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		2853BDE42C01DBDC008F0391 /* ExplanationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplanationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				1516B9912BB81FD5006670CC /* MainView.swift */,
+				2853BDE42C01DBDC008F0391 /* ExplanationView.swift */,
 				15B3269F2BF89F7900965890 /* Creation */,
 				15124FDB2BBC5ED6008272FE /* Account */,
 				1516B9802BB80E85006670CC /* TabList */,
@@ -623,6 +626,7 @@
 				15038D402BB32A99008C82D2 /* CommentListView.swift in Sources */,
 				15A36E162BB4709D009A5306 /* RatingData.swift in Sources */,
 				1521C0352B9F0C81009D8A43 /* Item.swift in Sources */,
+				2853BDE52C01DBDC008F0391 /* ExplanationView.swift in Sources */,
 				1516B97F2BB80282006670CC /* BrowserViewModel.swift in Sources */,
 				15B326A12BF89F7900965890 /* ContentUploadView.swift in Sources */,
 				1585FDC12BA07B4B00B80AE8 /* ContentViewModel.swift in Sources */,
@@ -843,6 +847,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = StepWise/StepWise.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"StepWise/Preview Content\"";
@@ -851,6 +856,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StepWise/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StepWise;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Importing Videos and Photos into project";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -866,7 +873,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = linus.StepWise;
+				PRODUCT_BUNDLE_IDENTIFIER = Linus.StepWise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -882,6 +889,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = StepWise/StepWise.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"StepWise/Preview Content\"";
@@ -890,6 +898,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StepWise/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StepWise;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Importing Videos and Photos into project";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -905,7 +915,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = linus.StepWise;
+				PRODUCT_BUNDLE_IDENTIFIER = Linus.StepWise;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
